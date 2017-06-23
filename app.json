@@ -1,0 +1,25 @@
+{
+    "name": "Github Bot",
+    "description": "A bot to manage open event projects",
+    "repository": "https://github.com/niranjan94/github-bot",
+    "keywords": [
+        "github", "bot"
+    ],
+    "env": {
+        "BOT_USERNAME": {
+            "required": true
+        },
+        "BASE64_PRIVATE_KEY": {
+            "required": true
+        },
+        "GITHUB_SECRET": {
+            "generator": "secret"
+        },
+        "NPM_CONFIG_PRODUCTION": "false"
+    },
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        }
+    ]
+}
