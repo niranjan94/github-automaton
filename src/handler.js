@@ -1,6 +1,14 @@
 import winston from 'winston-color'
 import { isBodyValid } from './auth'
 
+/**
+ * Validate a webhook payload and pass to the appropriate handler if it passes signature verfication
+ *
+ * @param signature
+ * @param data
+ * @param type
+ * @return {*}
+ */
 export default (signature, data, type) => {
     winston.info('Validating auth');
     const isAuthValid = isBodyValid(
