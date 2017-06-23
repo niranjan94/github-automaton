@@ -1,9 +1,12 @@
-import github from '../github'
+import { createInstance } from '../github'
 import Parser from '../parser'
 import messages from '../messages/load'
+import winston from 'winston-color'
 
 /**
- * All hook handlers should extend this
+ * All hook handlers should extend this.
+ *
+ * This provides a context aware API to GitHub
  */
 export default class {
 
@@ -15,6 +18,8 @@ export default class {
     constructor(payload) {
         this.payload = new Parser(payload);
         this.commentQueue = [];
+        this.logger = winston;
+        this.github = createInstance();
     }
 
     /**
@@ -22,7 +27,7 @@ export default class {
      */
     create() {
         this.payload.token.then((token) => {
-            github.authenticate({
+            this.github.authenticate({
                 type: "token",
                 token: token,
             });
@@ -39,13 +44,13 @@ export default class {
     getInnerPayload(target = null) {
         if (target === 'pull_request' || (! target && this.payload.hasOwnProperty('pull_request'))) {
             // All PRs are issues and some functions are shared with the issue API.
-            return { innerPayload: this.payload.pull_request, githubTarget: (!target ? github.issues : github.pullRequests) };
+            return { innerPayload: this.payload.pull_request, githubTarget: (!target ? this.github.issues : this.github.pullRequests) };
         } else if (target === 'issue' || (! target && this.payload.hasOwnProperty('issue'))) {
-            return { innerPayload: this.payload.issue, githubTarget: github.issues };
+            return { innerPayload: this.payload.issue, githubTarget: this.github.issues };
         } else if (target === 'label' || (! target && this.payload.hasOwnProperty('label'))) {
-            return { innerPayload: this.payload.label, githubTarget: github.issues };
+            return { innerPayload: this.payload.label, githubTarget: this.github.issues };
         } else if (target === 'comment' || (! target && this.payload.hasOwnProperty('comment'))) {
-            return { innerPayload: this.payload.comment, githubTarget: github.issues };
+            return { innerPayload: this.payload.comment, githubTarget: this.github.issues };
         }
         return null;
     }
@@ -88,7 +93,7 @@ export default class {
      */
     addLabels(labels = [], _target = null, _owner = null, _repo = null, _number = null) {
         let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
-        github.issues.addLabels({
+        this.github.issues.addLabels({
             owner, repo, number, labels
         });
     }
@@ -104,7 +109,7 @@ export default class {
      */
     replaceLabels(labels = [], _target = null, _owner = null, _repo = null, _number = null) {
         let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
-        github.issues.replaceAllLabels({
+        this.github.issues.replaceAllLabels({
             owner, repo, number, labels
         });
     }
@@ -140,15 +145,75 @@ export default class {
             body = this.commentQueue;
         }
 
-        if (username && messages.length > 0) {
+        if (username && body.length > 0) {
             body.unshift(messages.greeting(username))
         }
 
-        if (messages.length > 0) {
+        if (body.length > 0) {
             return githubTarget.createComment({
                 owner, repo, number,
                 body: body.join(`\n\n`).trim()
             });
         }
+    }
+
+    /**
+     * Delete a comment
+     *
+     * @param id
+     * @param _owner
+     * @param _repo
+     * @return {Promise<any>}
+     */
+    deleteComment(id = null, _owner = null, _repo = null) {
+        let { innerPayload, githubTarget, owner, repo } = this.getIssuePrAuth('comment', _owner, _repo);
+        if (!id) {
+            id = innerPayload.id;
+        }
+        return githubTarget.deleteComment({
+            id, owner, repo
+        })
+    }
+
+    /**
+     * Create an issue
+     *
+     * @param title
+     * @param body
+     * @param _owner
+     * @param _repo
+     * @param _target
+     */
+    createIssue(title, body = '', _owner = null, _repo = null, _target = null) {
+        let { owner, repo } = this.getIssuePrAuth(_target, _owner, _repo);
+        return this.github.issues.create({
+            owner, repo, title, body
+        })
+    }
+
+    closeIssue(_owner = null, _repo = null, _number = null, _target = null) {
+        let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
+        return this.github.issues.edit({
+            owner, repo, number,
+            state: "closed"
+        });
+    }
+
+    openIssue(_owner = null, _repo = null, _number = null, _target = null) {
+        let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
+        return this.github.issues.edit({
+            owner, repo, number,
+            state: "open"
+        });
+    }
+
+    lockIssue(_owner = null, _repo = null, _number = null, _target = null) {
+        let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
+        return this.github.issues.lock({ owner, repo, number });
+    }
+
+    unlockIssue(_owner = null, _repo = null, _number = null, _target = null) {
+        let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
+        return this.github.issues.unlock({ owner, repo, number });
     }
 }

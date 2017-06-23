@@ -45,9 +45,10 @@ exports.getIntegrationToken = () => {
 /**
  *
  * @param installationId
+ * @param repoName
  * @return {Promise}
  */
-exports.getIntegrationAccessToken = (installationId) => {
+exports.getIntegrationAccessToken = (installationId, repoName) => {
     return new Promise((resolve, reject) => {
         db.findOne({ installationId: installationId },  (err, doc) => {
             if (doc) {
@@ -76,7 +77,8 @@ exports.getIntegrationAccessToken = (installationId) => {
                     {
                         installationId: installationId,
                         token: token.token,
-                        expires_at: token.expires_at
+                        expires_at: token.expires_at,
+                        repoName
                     },
                     {
                         upsert: true,

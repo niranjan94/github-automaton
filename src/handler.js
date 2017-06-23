@@ -21,6 +21,10 @@ export default (signature, data, type) => {
         return callback(new Error('Invalid Auth'));
     }
 
+    if (type === 'integration_installation') {
+        type = 'installation';
+    }
+
     winston.info('Auth Valid');
     const event = data.action || data.state || 'UNKNOWN';
     const possibleHandlerPath = `./handlers/${type}/${event}`;

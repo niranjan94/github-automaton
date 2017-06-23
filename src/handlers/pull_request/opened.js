@@ -1,18 +1,17 @@
 import Base from '../base'
-import winston from 'winston-color'
-import { findIssueNumbers } from '../../utils/search'
+import { findIssueNumbers } from '../../utils/detection'
 import messages  from '../../messages/load'
 
 export default class extends Base {
     handle() {
         const { innerPayload: { body, number, user: { login } } } = this.getInnerPayload();
-        winston.info(`Adding needs-review label on new PR: ${number}`);
+        this.logger.info(`Adding needs-review label on new PR: ${number}`);
         this.replaceLabels(['needs-review']);
         const linkedIssues = findIssueNumbers(body);
 
         if (!login.endsWith('[bot]')) {
             if (linkedIssues.length === 0) {
-                winston.info(`No issues found for PR: ${number}`);
+                this.logger.info(`No issues found for PR: ${number}`);
                 this.replaceLabels(['needs-review']);
                 this.queueComment(messages.unlinkedPullRequest());
             }

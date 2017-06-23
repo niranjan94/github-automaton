@@ -14,6 +14,10 @@ export default class extends Model {
         if (!this.hasOwnProperty('installation')) {
             return null;
         }
-        return getIntegrationAccessToken(this.installation.id);
+        let repoName = null;
+        if (this.hasOwnProperty('repository')) {
+            repoName = this.repository.full_name;
+        }
+        return getIntegrationAccessToken(this.installation.id, repoName);
     }
 }

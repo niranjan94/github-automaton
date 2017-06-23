@@ -1,12 +1,18 @@
 const GitHubApi = require("github");
 
-/**
- * Initialize the github API client
- */
-export default new GitHubApi({
+const options = {
     debug: true,
     protocol: "https",
     headers: {
         "user-agent": process.env.USER_AGENT
-    },
-});
+    }
+};
+
+/**
+ * Initialize the github API client
+ */
+export const github = new GitHubApi(options);
+
+export const createInstance = function () {
+    return new GitHubApi(options);
+};

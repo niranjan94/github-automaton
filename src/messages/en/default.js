@@ -37,7 +37,12 @@ export default {
             I\'ve copied the relevant info below to save you some time.\n\n${failureItemsText}
         `
     },
-    issueMoved(newIssueUrl) {
+    movedIssueBody(user, originalIssueUrl, originalIssueBody) {
+        return stripIndent`
+            ###### Original issue submitted by @${user} in ${originalIssueUrl}\n---\n${originalIssueBody}
+        `
+    },
+    issueMovedComment(newIssueUrl) {
         return stripIndent`
             I've [moved your issue](${newIssueUrl}) to the correct repository.
             Please make sure to keep an eye on the new issue for the latest information.
