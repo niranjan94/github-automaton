@@ -51,13 +51,13 @@ exports.getIntegrationAccessToken = (installationId) => {
     return new Promise((resolve, reject) => {
         db.findOne({ installationId: installationId },  (err, doc) => {
             if (doc) {
-                const expiresAt = moment().utc(doc.expires_at);
-                if (expiresAt.isAfter(moment().utc().add(5, 'seconds'))) {
+                const expiresAt = moment(doc.expires_at);
+                if (expiresAt.isAfter(moment().add(5, 'minutes'))) {
                     return resolve(doc.token);
                 }
             }
             winston.info('Requesting integration access token for ID ' + installationId);
-            const jwt = getIntegrationToken();
+            const jwt = exports.getIntegrationToken();
             const res = request('POST', `https://api.github.com/installations/${installationId}/access_tokens`, {
                 'headers': {
                     'User-Agent': process.env.USER_AGENT,

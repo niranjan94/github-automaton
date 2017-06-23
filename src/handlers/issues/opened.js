@@ -1,13 +1,12 @@
 import Base from '../base'
-import github from '../../github'
+import winston from 'winston-color'
 
 export default class extends Base {
     handle() {
-        github.issues.createComment({
-            owner: this.payload.repository.owner.login,
-            repo: this.payload.repository.name,
-            number: this.payload.issue.number,
-            body: 'test comment'
-        });
+        const { innerPayload: { body, number } } = this.getInnerPayload();
+        if (body.length <= 20) {
+            winston.info(`Adding needs-info label on issue: ${number}`);
+            this.addLabels(['needs-info']);
+        }
     }
 };
