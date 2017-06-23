@@ -183,6 +183,8 @@ export default class {
      * @param _owner
      * @param _repo
      * @param _target
+     *
+     * @return {Promise<any>}
      */
     createIssue(title, body = '', _owner = null, _repo = null, _target = null) {
         let { owner, repo } = this.getIssuePrAuth(_target, _owner, _repo);
@@ -191,6 +193,14 @@ export default class {
         })
     }
 
+    /**
+     * Close an issue
+     * @param _owner
+     * @param _repo
+     * @param _number
+     * @param _target
+     * @return {Promise<any>}
+     */
     closeIssue(_owner = null, _repo = null, _number = null, _target = null) {
         let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
         return this.github.issues.edit({
@@ -199,6 +209,15 @@ export default class {
         });
     }
 
+    /**
+     * Open an issue
+     *
+     * @param _owner
+     * @param _repo
+     * @param _number
+     * @param _target
+     * @return {Promise<any>}
+     */
     openIssue(_owner = null, _repo = null, _number = null, _target = null) {
         let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
         return this.github.issues.edit({
@@ -207,13 +226,46 @@ export default class {
         });
     }
 
+    /**
+     * Lock an issue
+     *
+     * @param _owner
+     * @param _repo
+     * @param _number
+     * @param _target
+     * @return {Promise<any>}
+     */
     lockIssue(_owner = null, _repo = null, _number = null, _target = null) {
         let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
         return this.github.issues.lock({ owner, repo, number });
     }
 
+    /**
+     * Unlock an issue
+     *
+     * @param _owner
+     * @param _repo
+     * @param _number
+     * @param _target
+     * @return {Promise<any>}
+     */
     unlockIssue(_owner = null, _repo = null, _number = null, _target = null) {
         let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
         return this.github.issues.unlock({ owner, repo, number });
+    }
+
+    /**
+     * Create a PR review request
+     *
+     * @param users
+     * @param _owner
+     * @param _repo
+     * @param _number
+     * @param _target
+     * @return {Promise<any>}
+     */
+    createPrReviewRequest(users, _owner = null, _repo = null, _number = null, _target = null) {
+        let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
+        return this.github.pullRequests.createReviewRequest({ owner, repo, number, reviewers: users });
     }
 }

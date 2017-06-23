@@ -13,6 +13,7 @@
     "github": "^9.2.0",
     "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
+    "mention-bot": "^3.0.2",
     "moment": "^2.18.1",
     "nedb": "^1.8.0",
     "sync-request": "^4.1.0",
