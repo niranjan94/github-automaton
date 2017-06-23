@@ -31,10 +31,15 @@ export default {
             Did you forget to add one ? ;)
         `
     },
-    buildFailed(failureItemsText) {
+    buildFailed() {
         return stripIndent`
             It looks like one or more of your builds have failed.
-            I\'ve copied the relevant info below to save you some time.\n\n${failureItemsText}
+            I\'ve added the relevant info below to save you some time.\n
+        `
+    },
+    buildFailureItem(buildNumber, owner, repo, id) {
+        return stripIndent`
+            - [Build ${buildNumber}](https://travis-ci.org/${owner}/${repo}/jobs/${id}) has \`failed\`
         `
     },
     movedIssueBody(user, originalIssueUrl, originalIssueBody) {
