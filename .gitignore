@@ -59,4 +59,4 @@ typings/
 .env
 dist
 data.db
-bot.private-key.pem
+*.private-key.pem

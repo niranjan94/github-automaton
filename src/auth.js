@@ -34,7 +34,8 @@ exports.isBodyValid = (rawBody, signature, secret) => {
  * @return {String}
  */
 exports.getIntegrationToken = () => {
-    const cert = fs.readFileSync('bot.private-key.pem');  // get private key
+    const privateKeyFileName = process.KEY_FILE_NAME || 'bot.private-key.pem';
+    const cert = fs.readFileSync(privateKeyFileName);  // get private key
     return jwt.sign({
         iat: moment().utc().unix(),
         exp: moment().utc().add(4, 'minutes').unix(),
