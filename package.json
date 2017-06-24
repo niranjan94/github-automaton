@@ -33,5 +33,5 @@
   "main": "src/index.js",
   "repository": "https://github.com/niranjan94/github-bot",
   "author": "Niranjan Rajendran <niranjan94@yahoo.com>",
-  "license": "MIT"
+  "license": "Apache-2.0"
 }

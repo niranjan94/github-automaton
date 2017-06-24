@@ -1,6 +1,6 @@
 {
     "name": "Github Bot",
-    "description": "A bot to manage open event projects",
+    "description": "A bot to manage open source projects",
     "repository": "https://github.com/niranjan94/github-bot",
     "keywords": [
         "github", "bot"
@@ -11,6 +11,9 @@
         },
         "BASE64_PRIVATE_KEY": {
             "required": true
+        },
+        "BOT_ID": {
+            "required": true,
         },
         "GITHUB_SECRET": {
             "generator": "secret"

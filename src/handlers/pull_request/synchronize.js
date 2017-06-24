@@ -17,6 +17,8 @@ export default class extends Base {
                 this.addComments([messages.prHasConflicts()]);
             } else if (!rebaseable) {
                 this.addComments([messages.prCannotBeRebased()]);
+            } else {
+
             }
         });
     }
