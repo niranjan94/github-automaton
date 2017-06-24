@@ -7,7 +7,6 @@ export default class extends Base {
         if (body.length > 20) {
             this.logger.info(`Removing needs-info label on issue: ${number}`);
             this.removeLabels(['needs-info']);
-            console.log(id);
             db.findOne({
                 relatedId: id,
                 temporaryEntry: true,
@@ -15,7 +14,7 @@ export default class extends Base {
             }, (err, doc) => {
                 console.log(doc);
                 if (doc) {
-                    this.logger.info(`Deleting comment with ID : ${doc.selfId}`);
+                    this.logger.info(`Deleting comment (${doc.type}) with ID : ${doc.selfId}`);
                     this.deleteComment(doc.selfId);
                     db.remove({ _id: doc._id });
                 }
