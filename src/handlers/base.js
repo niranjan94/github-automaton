@@ -199,7 +199,7 @@ export default class {
      */
     deleteComment(id = null, _owner = null, _repo = null) {
         let { innerPayload, githubTarget, owner, repo } = this.getIssuePrAuth('comment', _owner, _repo);
-        if (!id) {
+        if (!id && innerPayload) {
             id = innerPayload.id;
         }
         return githubTarget.deleteComment({
