@@ -20,4 +20,13 @@ export default function () {
         winston.info('Decoding and saving private key from env var');
         fs.writeFileSync('bot.private-key.pem', Buffer.from(process.env.BASE64_PRIVATE_KEY, 'base64'));
     }
+
+    /**
+     * Hot patch mention bot
+     */
+
+    const pathToFile = require.resolve('mention-bot');
+    let fileContent = fs.readFileSync(pathToFile).toString();
+    fileContent = _.replace(fileContent, 'require(\'babel-polyfill\');', '');
+    fs.writeFileSync(pathToFile, fileContent);
 };

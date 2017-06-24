@@ -52,5 +52,24 @@ export default {
             I've [moved your issue](${newIssueUrl}) to the correct repository.
             Please make sure to keep an eye on the new issue for the latest information.
         `
+    },
+    closedWithoutMerging() {
+        return stripIndent`
+            Looks like this PR was closed without merging. 
+            Please try not to make test/temporary PRs :) Keeps the repo clean.
+        `
+    },
+    prHasConflicts() {
+        return stripIndent`
+            Looks like your PR has some conflicts. :worried:
+            Could you resolve them and rebase on top of the latest upstream code ?
+        `
+    },
+    prCannotBeRebased() {
+        return stripIndent`
+            Looks like your PR is behind the upstream
+            Could you rebase it on top of the latest upstream code ?
+        `
     }
+
 };

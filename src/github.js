@@ -1,7 +1,7 @@
 const GitHubApi = require("github");
 
 const options = {
-    debug: true,
+    debug: false,
     protocol: "https",
     headers: {
         "user-agent": process.env.USER_AGENT

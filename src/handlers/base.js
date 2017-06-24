@@ -38,12 +38,13 @@ export default class {
     /**
      * Get the primary payload (Pull request or issue or label or comment)
      *
+     * Note: All PRs are issues and some functions are shared with the issue API.
+     *
      * @param target
      * @return {*}
      */
     getInnerPayload(target = null) {
         if (target === 'pull_request' || (! target && this.payload.hasOwnProperty('pull_request'))) {
-            // All PRs are issues and some functions are shared with the issue API.
             return { innerPayload: this.payload.pull_request, githubTarget: (!target ? this.github.issues : this.github.pullRequests) };
         } else if (target === 'issue' || (! target && this.payload.hasOwnProperty('issue'))) {
             return { innerPayload: this.payload.issue, githubTarget: this.github.issues };
@@ -51,6 +52,8 @@ export default class {
             return { innerPayload: this.payload.label, githubTarget: this.github.issues };
         } else if (target === 'comment' || (! target && this.payload.hasOwnProperty('comment'))) {
             return { innerPayload: this.payload.comment, githubTarget: this.github.issues };
+        } else if (target === 'review' || (! target && this.payload.hasOwnProperty('review'))) {
+            return { innerPayload: this.payload.review, githubTarget: (!target ? this.github.issues : this.github.pullRequests) };
         }
         return null;
     }
@@ -90,13 +93,38 @@ export default class {
      * @param _owner
      * @param _repo
      * @param _number
+     *
+     * @return {Promise<any>}
      */
     addLabels(labels = [], _target = null, _owner = null, _repo = null, _number = null) {
         let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
-        this.github.issues.addLabels({
+        return this.github.issues.addLabels({
             owner, repo, number, labels
         });
     }
+
+    /**
+     * Remove labels from issues/pr
+     * @param labels
+     * @param _target
+     * @param _owner
+     * @param _repo
+     * @param _number
+     *
+     * @return {Promise<any>}
+     */
+    removeLabels(labels = [], _target = null, _owner = null, _repo = null, _number = null) {
+        let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
+        let promises = [];
+        labels.forEach(label => {
+            promises.push(this.github.issues.removeLabel({
+                owner, repo, number,
+                name: label
+            }));
+        });
+        return Promise.all(promises);
+    }
+
 
     /**
      * Replace labels on issues/PRs
@@ -106,10 +134,12 @@ export default class {
      * @param _owner
      * @param _repo
      * @param _number
+     *
+     * @return {Promise<any>}
      */
     replaceLabels(labels = [], _target = null, _owner = null, _repo = null, _number = null) {
         let { owner, repo, number } = this.getIssuePrAuth(_target, _owner, _repo, _number);
-        this.github.issues.replaceAllLabels({
+        return this.github.issues.replaceAllLabels({
             owner, repo, number, labels
         });
     }
@@ -132,6 +162,7 @@ export default class {
      * @param _owner
      * @param _repo
      * @param _number
+     *
      * @return {Promise<any>}
      */
     addComments(body = [], username = null, _target = null, _owner = null, _repo = null, _number = null) {
@@ -155,6 +186,7 @@ export default class {
                 body: body.join(`\n\n`).trim()
             });
         }
+        return new Promise(function () { });
     }
 
     /**

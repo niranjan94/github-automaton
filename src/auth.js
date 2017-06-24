@@ -34,12 +34,12 @@ exports.isBodyValid = (rawBody, signature, secret) => {
  * @return {String}
  */
 exports.getIntegrationToken = () => {
-    const privateKeyFileName = process.KEY_FILE_NAME || 'bot.private-key.pem';
+    const privateKeyFileName = process.env.KEY_FILE_NAME || 'bot.private-key.pem';
     const cert = fs.readFileSync(privateKeyFileName);  // get private key
     return jwt.sign({
         iat: moment().utc().unix(),
         exp: moment().utc().add(4, 'minutes').unix(),
-        iss: 3267
+        iss: parseInt(process.env.BOT_ID)
     }, cert, { algorithm: 'RS256'});
 };
 
@@ -58,6 +58,7 @@ exports.getIntegrationAccessToken = (installationId, repoName) => {
                     return resolve(doc.token);
                 }
             }
+
             winston.info('Requesting integration access token for ID ' + installationId);
             const jwt = exports.getIntegrationToken();
             const res = request('POST', `https://api.github.com/installations/${installationId}/access_tokens`, {

@@ -33,7 +33,7 @@ export default (signature, data, type) => {
     try {
         eventHandler = require(possibleHandlerPath);
     } catch (e) {
-        winston.warn(e.message);
+        winston.warn(e);
         winston.warn(`No matching handler found for ${type}:${event}`, 'verbose');
         winston.warn(`Tried looking in ${possibleHandlerPath}`, 'verbose');
         return;
