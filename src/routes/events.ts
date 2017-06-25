@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { BaseRoute } from './route';
 import { responder } from '../bot/responder';
+import { BaseRoute } from './route';
 
 /**
  * / route

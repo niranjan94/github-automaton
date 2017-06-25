@@ -52,6 +52,8 @@ export class Server {
    * @method config
    */
   public config() {
+    (mongoose as any).Promise = Promise;
+
     mongoose.connect(process.env.MONGODB_URI);
 
     this.app.use(express.static('public'));

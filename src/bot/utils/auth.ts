@@ -39,7 +39,7 @@ export class Auth {
 
     const payload = {
       exp: moment().utc().add(4, 'minutes').unix(),
-      iat: moment().utc().unix().toString() as string,
+      iat: moment().utc().unix(),
       iss: parseInt(process.env.BOT_ID),
     };
 
@@ -75,10 +75,12 @@ export class Auth {
           json: true,
           method: 'POST',
           uri: `https://api.github.com/installations/${installationId}/access_tokens`,
-        }).then((response: { expires_at: number, token: string }) => {
+        }).then((response: { expires_at: string, token: string }) => {
           if (!installation) {
             installation = new Installation();
           }
+
+          console.log(response.expires_at);
           installation.installationId = installationId;
           installation.token = response.token;
           installation.expiresAt = response.expires_at;
@@ -86,6 +88,8 @@ export class Auth {
           installation.save().then(() => {
             resolve(response.token);
           });
+        }).catch((eTwo) => {
+          winston.error(`error while requesting integration token. ${eTwo}`);
         });
       });
     });

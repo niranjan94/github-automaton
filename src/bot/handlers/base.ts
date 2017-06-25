@@ -75,8 +75,8 @@ export abstract class HandlerBase {
 
   protected logInfo(info: string) {
     try {
-      this.logger.info(`[${this.payload.repository.full_name}] ${info}`)
-    } catch (ignored) { /** ignored **/ }
+      this.logger.info(`[${this.payload.repository.full_name}] ${info}`);
+    } catch (ignored) { /* ignored */ }
   }
   /**
    * Queue an issue/PR comment

@@ -1,14 +1,14 @@
-import * as winston from 'winston';
 import { Error } from 'mongoose';
-import { Auth } from './utils/auth'
+import * as winston from 'winston';
 import { HandlerBase } from './handlers/base';
+import { Auth } from './utils/auth';
 
 export const responder = (signature, data, type) => {
   winston.info('Validating auth');
   const isAuthValid = Auth.isBodyValid(
     JSON.stringify(data),
     signature,
-    process.env.GITHUB_SECRET || ''
+    process.env.GITHUB_SECRET || '',
   );
 
   if (!isAuthValid) {
@@ -27,9 +27,13 @@ export const responder = (signature, data, type) => {
   try {
     eventHandler = require(possibleHandlerPath);
   } catch (e) {
-    winston.warn(e);
-    winston.warn(`No matching handler found for ${type}:${event}`, 'verbose');
-    winston.warn(`Tried looking in ${possibleHandlerPath}`, 'verbose');
+    if (e.message.includes('Cannot find module')) {
+      winston.warn(e.message);
+      winston.warn(`No matching handler found for ${type}:${event}`, 'verbose');
+      winston.warn(`Tried looking in ${possibleHandlerPath}`, 'verbose');
+    } else {
+      winston.warn(e);
+    }
     return;
   }
 

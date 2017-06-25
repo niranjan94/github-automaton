@@ -1,14 +1,14 @@
 import { Document, Model, model, Schema } from 'mongoose';
 
 export interface IInstallationModel extends Document {
-  expiresAt: number;
+  expiresAt: string;
   installationId: number;
   token: string;
   username: string;
 }
 
 const installationSchema: Schema = new Schema({
-  expiresAt: Number,
+  expiresAt: String,
   installationId: Number,
   token: String,
   username: String,
