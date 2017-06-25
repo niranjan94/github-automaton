@@ -1,0 +1,33 @@
+language: node_js
+
+node_js:
+  - "6"
+
+env:
+  - CXX=g++-4.8
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+
+cache:
+  directories:
+    - $HOME/.npm
+    - $HOME/.cache
+
+before_install:
+  - npm install -g npm@5
+  - npm config set spin false
+  - npm install -g yarn tslint typescript
+  - yarn --version
+  - tslint --version
+  - tsc --version
+
+install:
+  - yarn
+
+script:
+  - npm run test
