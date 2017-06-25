@@ -8,9 +8,8 @@ import { IReview } from '../interfaces/review';
 import { ILabel } from '../interfaces/label';
 import { IIssue } from '../interfaces/issue';
 import { GitHub } from '../utils/github';
-import { Messages } from '../messages'
+import { Messages } from '../messages';
 import { Auth } from '../utils/auth';
-
 
 interface IPrimaryPayload<T> {
   primary: T;
@@ -93,15 +92,15 @@ export abstract class HandlerBase {
    */
   protected getPrimaryPayload(target?: string): IPrimaryPayload<any> | null {
     if (target === 'pull_request' || (!target && this.payload.hasOwnProperty('pull_request'))) {
-      return { primary: this.payload.pull_request, apiTarget: (!target ? 'issues' : 'pullRequests') };
+      return {primary: this.payload.pull_request, apiTarget: (!target ? 'issues' : 'pullRequests')};
     } else if (target === 'issue' || (!target && this.payload.hasOwnProperty('issue'))) {
-      return { primary: this.payload.issue, apiTarget: 'issues' };
+      return {primary: this.payload.issue, apiTarget: 'issues'};
     } else if (target === 'label' || (!target && this.payload.hasOwnProperty('label'))) {
-      return { primary: this.payload.label, apiTarget: 'issues' };
+      return {primary: this.payload.label, apiTarget: 'issues'};
     } else if (target === 'comment' || (!target && this.payload.hasOwnProperty('comment'))) {
-      return { primary: this.payload.comment, apiTarget: 'issues' };
+      return {primary: this.payload.comment, apiTarget: 'issues'};
     } else if (target === 'review' || (!target && this.payload.hasOwnProperty('review'))) {
-      return { primary: this.payload.review, apiTarget: (!target ? 'issues' : 'pullRequests') };
+      return {primary: this.payload.review, apiTarget: (!target ? 'issues' : 'pullRequests')};
     }
     return null;
   }
@@ -115,8 +114,8 @@ export abstract class HandlerBase {
    * @param number
    * @return {{primary: (IIssue|IPullRequest|ILabel|IComment|IReview), apiTarget: string, owner: string, repo: string, number: number}}
    */
-  protected getBasicData (target?: string, owner?: string, repo?: string, number?: number): IBasicData<any> {
-    let { primary, apiTarget } = this.getPrimaryPayload(target);
+  protected getBasicData(target?: string, owner?: string, repo?: string, number?: number): IBasicData<any> {
+    let {primary, apiTarget} = this.getPrimaryPayload(target);
 
     if (!owner) {
       owner = this.payload.repository.owner.login;
@@ -130,9 +129,8 @@ export abstract class HandlerBase {
       number = primary.number;
     }
 
-    return { primary, apiTarget, owner, repo, number };
+    return {primary, apiTarget, owner, repo, number};
   }
-
 
   /**
    * Add labels to issues/PRs
@@ -146,7 +144,7 @@ export abstract class HandlerBase {
    * @return {Promise}
    */
   addLabels(labels = [], _target?: string, _owner?: string, _repo?: string, _number?: number): Promise<any> {
-    let { owner, repo, number } = this.getBasicData(_target, _owner, _repo, _number);
+    let {owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number);
     return this.github.issues.addLabels({
       owner, repo, number, labels
     });
@@ -163,7 +161,7 @@ export abstract class HandlerBase {
    * @return {Promise}
    */
   removeLabels(labels = [], _target?: string, _owner?: string, _repo?: string, _number?: number): Promise<any> {
-    let { owner, repo, number } = this.getBasicData(_target, _owner, _repo, _number);
+    let {owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number);
     let promises = [];
     labels.forEach(label => {
       promises.push(this.github.issues.removeLabel({
@@ -186,7 +184,7 @@ export abstract class HandlerBase {
    * @return {Promise}
    */
   replaceLabels(labels = [], _target?: string, _owner?: string, _repo?: string, _number?: number): Promise<any> {
-    let { owner, repo, number } = this.getBasicData(_target, _owner, _repo, _number) as IBasicData<IIssue>;
+    let {owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number) as IBasicData<IIssue>;
     return this.github.issues.replaceAllLabels({
       owner, repo, number, labels
     });
@@ -205,7 +203,7 @@ export abstract class HandlerBase {
    * @return {Promise}
    */
   addComments(comments = [], username?: string, _target?: string, _owner?: string, _repo?: string, _number?: number): Promise<any> {
-    let { primary, owner, repo, number } = this.getBasicData(_target, _owner, _repo, _number) as IBasicData<IIssue>;
+    let {primary, owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number) as IBasicData<IIssue>;
     if (!username && primary) {
       username = primary.user.login;
     }
@@ -213,7 +211,7 @@ export abstract class HandlerBase {
     comments.push(...this.commentQueue);
 
     if (username && comments.length > 0) {
-      comments.unshift(Messages.greeting(username))
+      comments.unshift(Messages.greeting(username));
     }
 
     if (comments.length > 0) {
@@ -223,7 +221,7 @@ export abstract class HandlerBase {
         body: comments.join(`\n\n`).trim()
       });
     }
-    return new Promise(function (resolve, reject) { reject ('No comments added.') });
+    return new Promise(function (resolve, reject) { reject('No comments added.'); });
   }
 
   /**
@@ -235,8 +233,8 @@ export abstract class HandlerBase {
    *
    * @return {Promise}
    */
-  deleteComment(id?: string|number, _owner?:string , _repo?:string ): Promise<any> {
-    let { primary, owner, repo } = this.getBasicData('comment', _owner, _repo) as IBasicData<IComment>;
+  deleteComment(id?: string | number, _owner?: string, _repo?: string): Promise<any> {
+    let {primary, owner, repo} = this.getBasicData('comment', _owner, _repo) as IBasicData<IComment>;
     if (!id && primary) {
       id = primary.id;
     }
@@ -256,10 +254,10 @@ export abstract class HandlerBase {
    * @return {Promise}
    */
   createIssue(title: string, body = '', _owner?: string, _repo?: string): Promise<any> {
-    let { owner, repo } = this.getBasicData('issue', _owner, _repo);
+    let {owner, repo} = this.getBasicData('issue', _owner, _repo);
     return this.github.issues.create({
       owner, repo, title, body
-    })
+    });
   }
 
   /**
@@ -271,10 +269,10 @@ export abstract class HandlerBase {
    * @return {Promise}
    */
   closeIssue(_number?: number, _owner?: string, _repo?: string): Promise<any> {
-    let { owner, repo, number } = this.getBasicData('issue', _owner, _repo, _number);
+    let {owner, repo, number} = this.getBasicData('issue', _owner, _repo, _number);
     return this.github.issues.edit({
       owner, repo, number,
-      state: "closed"
+      state: 'closed'
     });
   }
 
@@ -287,10 +285,10 @@ export abstract class HandlerBase {
    * @return {Promise}
    */
   openIssue(_number?: number, _owner?: string, _repo?: string): Promise<any> {
-    let { owner, repo, number } = this.getBasicData('issue', _owner, _repo, _number);
+    let {owner, repo, number} = this.getBasicData('issue', _owner, _repo, _number);
     return this.github.issues.edit({
       owner, repo, number,
-      state: "open"
+      state: 'open'
     });
   }
 
@@ -303,8 +301,8 @@ export abstract class HandlerBase {
    * @return {Promise}
    */
   lockIssue(_number?: number, _owner?: string, _repo?: string): Promise<any> {
-    let { owner, repo, number } = this.getBasicData('issue', _owner, _repo, _number);
-    return this.github.issues.lock({ owner, repo, number });
+    let {owner, repo, number} = this.getBasicData('issue', _owner, _repo, _number);
+    return this.github.issues.lock({owner, repo, number});
   }
 
   /**
@@ -316,8 +314,8 @@ export abstract class HandlerBase {
    * @return {Promise}
    */
   unlockIssue(_number?: number, _owner?: string, _repo?: string): Promise<any> {
-    let { owner, repo, number } = this.getBasicData('issue', _owner, _repo, _number);
-    return this.github.issues.unlock({ owner, repo, number });
+    let {owner, repo, number} = this.getBasicData('issue', _owner, _repo, _number);
+    return this.github.issues.unlock({owner, repo, number});
   }
 
   /**
@@ -330,8 +328,8 @@ export abstract class HandlerBase {
    * @return {Promise}
    */
   createPrReviewRequest(users: string[], _owner?: string, _repo?: string, _number?: number) {
-    let { owner, repo, number } = this.getBasicData('pull_request', _owner, _repo, _number);
-    return this.github.pullRequests.createReviewRequest({ owner, repo, number, reviewers: users });
+    let {owner, repo, number} = this.getBasicData('pull_request', _owner, _repo, _number);
+    return this.github.pullRequests.createReviewRequest({owner, repo, number, reviewers: users});
   }
 
 }

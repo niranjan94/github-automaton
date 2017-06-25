@@ -1,6 +1,6 @@
 import { HandlerBase, IBasicData } from '../base';
-import { Messages } from '../../messages'
-import { Detector } from '../../utils/detection'
+import { Messages } from '../../messages';
+import { Detector } from '../../utils/detection';
 import { IComment } from '../../interfaces/comment';
 import { IApiResponse } from '../../interfaces/api-response';
 import { IIssue } from '../../interfaces/issue';
@@ -29,13 +29,12 @@ export default class extends HandlerBase {
         });
     }).catch(e => {
       console.log(e);
-      this.logger.info(`Non-member (${login}} trying to make a move request. Ignoring.`)
+      this.logger.info(`Non-member (${login}} trying to make a move request. Ignoring.`);
     });
   }
 
-
   public handle() {
-    const { primary: { id, body, user: { login } } } = this.getBasicData('comment') as IBasicData<IComment>;
+    const {primary: {id, body, user: {login}}} = this.getBasicData('comment') as IBasicData<IComment>;
 
     if (Detector.isInvalidComment(body)) {
       this.logger.info(`Removing invalid comment (Body: ${body} id: ${id}`);
@@ -45,12 +44,12 @@ export default class extends HandlerBase {
     const moveToTarget = Detector.getIssueMoveCommand(body);
     if (moveToTarget) {
       const [newOwner, newRepo] = moveToTarget.split('/');
-      const { issue, repository } = this.payload;
+      const {issue, repository} = this.payload;
       const organization = repository.owner.login;
       if (repository.full_name !== moveToTarget.trim()) {
         this.moveIssue(organization, login, issue, newOwner, newRepo);
       } else {
-        this.logger.info(`Cannot move to same repo ${repository.full_name} >> ${moveToTarget}.`)
+        this.logger.info(`Cannot move to same repo ${repository.full_name} >> ${moveToTarget}.`);
       }
     }
   }

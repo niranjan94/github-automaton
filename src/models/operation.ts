@@ -4,7 +4,7 @@ export interface IOperationModel extends Document {
   relatedId: string,
   temporaryEntry: boolean,
   type: string,
-  selfId: string|number
+  selfId: string | number
 }
 
 const OperationSchema: Schema = new Schema({
