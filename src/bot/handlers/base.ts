@@ -17,7 +17,7 @@ interface IPrimaryPayload<T> {
   apiTarget: string;
 }
 
-interface IBasicData<T> extends IPrimaryPayload<T> {
+export interface IBasicData<T> extends IPrimaryPayload<T> {
   owner: string;
   repo: string;
   number: number;
@@ -235,11 +235,12 @@ export abstract class HandlerBase {
    *
    * @return {Promise}
    */
-  deleteComment(id?: string, _owner?:string , _repo?:string ): Promise<any> {
+  deleteComment(id?: string|number, _owner?:string , _repo?:string ): Promise<any> {
     let { primary, owner, repo } = this.getBasicData('comment', _owner, _repo) as IBasicData<IComment>;
     if (!id && primary) {
-      id = String(primary.id);
+      id = primary.id;
     }
+    id = String(id);
     return this.github.issues.deleteComment({
       id, owner, repo
     });
