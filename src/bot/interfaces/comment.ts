@@ -10,4 +10,3 @@ export interface IComment {
   updated_at: string;
   body: string;
 }
-

@@ -1,6 +1,6 @@
-import { IUser } from './user';
-import { ILink } from './link';
 import { IBaseHead } from './base-head';
+import { ILink } from './link';
+import { IUser } from './user';
 
 export interface IPullRequestLinks {
   self: ILink;

@@ -18,8 +18,7 @@ export class BaseRoute {
    * @param options {Object} Additional options to append to the view's local scope.
    * @return void
    */
-  public render(req: Request, res: Response, view: string, options?: Object) {
-    //render view
+  public render(req: Request, res: Response, view: string, options?: object) {
     res.render(view, options);
   }
 }

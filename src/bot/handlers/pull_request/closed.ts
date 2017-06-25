@@ -1,9 +1,9 @@
-import { HandlerBase, IBasicData } from '../base';
-import { Messages } from '../../messages';
 import { IPullRequest } from '../../interfaces/pull-request';
+import { Messages } from '../../messages';
+import { HandlerBase, IBasicData } from '../base';
 
 export default class extends HandlerBase {
-  handle() {
+  public handle() {
     const {primary: {number, merged}} = this.getBasicData() as IBasicData<IPullRequest>;
     if (merged) {
       this.logger.info(`Adding ready to ship label on merged PR: ${number}`);
@@ -14,4 +14,4 @@ export default class extends HandlerBase {
       this.addComments([Messages.closedWithoutMerging()]);
     }
   }
-};
+}

@@ -70,4 +70,3 @@ export interface IRepository {
 
   owner: IUser;
 }
-

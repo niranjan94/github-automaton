@@ -1,0 +1,26 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "rules": {
+    "radix": false,
+    "no-console": false,
+    "variable-name": [true, "check-format", "allow-leading-underscore", "allow-pascal-case"],
+    "member-ordering": false,
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double"
+    ],
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "max-line-length": [true, 160]
+  },
+  "jsRules": {
+
+  },
+  "rulesDirectory": []
+}

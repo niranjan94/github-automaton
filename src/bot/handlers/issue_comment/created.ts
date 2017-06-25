@@ -1,9 +1,9 @@
-import { HandlerBase, IBasicData } from '../base';
+import { IApiResponse } from '../../interfaces/api-response';
+import { IComment } from '../../interfaces/comment';
+import { IIssue } from '../../interfaces/issue';
 import { Messages } from '../../messages';
 import { Detector } from '../../utils/detection';
-import { IComment } from '../../interfaces/comment';
-import { IApiResponse } from '../../interfaces/api-response';
-import { IIssue } from '../../interfaces/issue';
+import { HandlerBase, IBasicData } from '../base';
 
 export default class extends HandlerBase {
 
@@ -18,7 +18,7 @@ export default class extends HandlerBase {
   private moveIssue(organization: string, login: string, issue: IIssue, owner: string, repo: string) {
     this.github.orgs.checkMembership({
       org: organization,
-      username: login
+      username: login,
     }).then(() => {
       this.createIssue(issue.title, Messages.movedIssueBody(login, issue.html_url, issue.body), owner, repo)
         .then((response: IApiResponse<IIssue>) => {
@@ -27,7 +27,7 @@ export default class extends HandlerBase {
           this.closeIssue();
           this.logger.info(`Old issue closed at ${issue.html_url}.`);
         });
-    }).catch(e => {
+    }).catch((e) => {
       console.log(e);
       this.logger.info(`Non-member (${login}} trying to make a move request. Ignoring.`);
     });
@@ -53,4 +53,4 @@ export default class extends HandlerBase {
       }
     }
   }
-};
+}

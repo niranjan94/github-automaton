@@ -1,9 +1,9 @@
-import { HandlerBase } from '../base';
-import { IFailedJobs, Travis } from '../../utils/travis';
 import { IOperationModel, Operation } from '../../../models/operation';
+import { IFailedJobs, Travis } from '../../utils/travis';
+import { HandlerBase } from '../base';
 
 export default class extends HandlerBase {
-  handle() {
+  public handle() {
     const {state, target_url, repository} = this.payload;
     if (state === 'failure') {
       if (target_url && target_url.includes('travis')) {
@@ -18,7 +18,7 @@ export default class extends HandlerBase {
             Operation.findOne({
               relatedId: `${repository.full_name}:${prNumber}`,
               temporaryEntry: true,
-              type: 'build_failed_comment'
+              type: 'build_failed_comment',
             }).then((operation: IOperationModel) => {
               this.deleteComment(operation.selfId, repoOwner, repoName);
               operation.remove();
@@ -28,4 +28,4 @@ export default class extends HandlerBase {
       }
     }
   }
-};
+}

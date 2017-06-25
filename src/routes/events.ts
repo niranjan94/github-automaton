@@ -16,7 +16,6 @@ export class EventsRoute extends BaseRoute {
    * @static
    */
   public static create(router: Router) {
-    //log
     console.log('[EventsRoute::create] Creating events route.');
 
     router.post('/events', (req: Request, res: Response, next: NextFunction) => {

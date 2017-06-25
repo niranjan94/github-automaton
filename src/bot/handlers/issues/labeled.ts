@@ -1,17 +1,17 @@
-import { HandlerBase, IBasicData } from '../base';
 import { Operation } from '../../../models/operation';
-import { ILabel } from '../../interfaces/label';
 import { IApiResponse } from '../../interfaces/api-response';
-import { Messages } from '../../messages/index';
 import { IComment } from '../../interfaces/comment';
+import { ILabel } from '../../interfaces/label';
+import { Messages } from '../../messages/index';
+import { HandlerBase, IBasicData } from '../base';
 
 export default class extends HandlerBase {
-  handle() {
+  public handle() {
     const {primary: {name}} = this.getBasicData('label') as IBasicData<ILabel>;
     if (name === 'needs-info') {
       this.addComments([Messages.needsInfo()]).then((response: IApiResponse<IComment>) => {
         const {data} = response;
-        let operation = new Operation();
+        const operation = new Operation();
         operation.relatedId = this.getBasicData().primary.id;
         operation.temporaryEntry = true;
         operation.type = 'needs_info_comment';
@@ -20,4 +20,4 @@ export default class extends HandlerBase {
       });
     }
   }
-};
+}

@@ -1,12 +1,12 @@
-import { IInstallation } from './installation';
-import { IPullRequest } from './pull-request';
-import { IRepository } from './repository';
-import { IComment } from './comment';
 import { IBranch } from './branch';
+import { IComment } from './comment';
 import { ICommit } from './commit';
-import { IReview } from './review';
+import { IInstallation } from './installation';
 import { IIssue } from './issue';
 import { ILabel } from './label';
+import { IPullRequest } from './pull-request';
+import { IRepository } from './repository';
+import { IReview } from './review';
 import { IUser } from './user';
 
 export interface IEventBase {

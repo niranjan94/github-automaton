@@ -1,12 +1,12 @@
-import * as winston from 'winston';
 import * as request from 'request-promise-native';
 import { RequestPromise } from 'request-promise-native';
+import * as winston from 'winston';
 
 export interface ITravisJob {
   id: string;
   config: {
     os: string;
-  },
+  };
   number: string;
   state: string;
   started_at: string;
@@ -16,13 +16,13 @@ export interface ITravisJob {
 export interface ITravisBuildResponse {
   build: {
     pull_request_number: number;
-  },
-  jobs: Array<ITravisJob>;
+  };
+  jobs: ITravisJob[];
 }
 
 export interface IFailedJobs {
-  prNumber: number,
-  failedJobs: Array<ITravisJob>;
+  prNumber: number;
+  failedJobs: ITravisJob[];
 }
 
 export class Travis {
@@ -30,7 +30,7 @@ export class Travis {
   private static buildIdRe = /.+\/(\d+)/;
   private static headers = {
     'Accept': 'application/vnd.travis-ci.2+json',
-    'User-Agent': process.env.USER_AGENT
+    'User-Agent': process.env.USER_AGENT,
   };
 
   /**
@@ -44,10 +44,10 @@ export class Travis {
   public static getBuildInfo(repoOwner: string, repo: string, buildId: string): RequestPromise {
     winston.info(`${repoOwner}/${repo} -> Getting build info of build ID: ${buildId}.`);
     return request({
+      headers: Travis.headers,
+      json: true,
       method: 'GET',
       uri: `${Travis.API_BASE}/repos/${repoOwner}/${repo}/builds/${buildId}`,
-      json: true,
-      headers: Travis.headers
     });
   }
 
@@ -83,8 +83,8 @@ export class Travis {
           const prNumber = response.build.pull_request_number;
           if (prNumber) {
             resolve({
+              failedJobs: response.jobs.filter((build) => build.state === 'failed'),
               prNumber,
-              failedJobs: response.jobs.filter(build => build.state === 'failed')
             });
           }
         });

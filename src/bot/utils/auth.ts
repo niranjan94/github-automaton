@@ -1,9 +1,9 @@
-import * as jwt from 'jsonwebtoken';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
+import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
-import * as winston from 'winston';
 import * as request from 'request-promise-native';
+import * as winston from 'winston';
 import { IInstallationModel, Installation } from '../../models/installation';
 
 export class Auth {
@@ -25,7 +25,7 @@ export class Auth {
 
     return crypto.timingSafeEqual(
       new Buffer(signature),
-      new Buffer(`sha1=${newSignature}`)
+      new Buffer(`sha1=${newSignature}`),
     );
   }
 
@@ -38,9 +38,9 @@ export class Auth {
     const cert = fs.readFileSync(privateKeyFileName);  // get private key
 
     const payload = {
-      iat: <string> moment().utc().unix().toString(),
       exp: moment().utc().add(4, 'minutes').unix(),
-      iss: parseInt(process.env.BOT_ID)
+      iat: moment().utc().unix().toString() as string,
+      iss: parseInt(process.env.BOT_ID),
     };
 
     return jwt.sign(payload, cert, {algorithm: 'RS256'});
@@ -54,7 +54,7 @@ export class Auth {
    */
   public static getIntegrationAccessToken(installationId: number, username: string): Promise<string> {
     return new Promise((resolve) => {
-      Installation.findOne({installationId: installationId}, (e, installation: IInstallationModel) => {
+      Installation.findOne({installationId}, (e, installation: IInstallationModel) => {
         if (!e && installation) {
           const expiresAt = moment(installation.expiresAt);
           if (expiresAt.isAfter(moment().add(5, 'minutes'))) {
@@ -67,14 +67,14 @@ export class Auth {
         const jwt = Auth.getIntegrationToken();
 
         request({
+          headers: {
+            'Accept': 'application/vnd.github.machine-man-preview+json',
+            'Authorization': 'Bearer ' + jwt,
+            'User-Agent': process.env.USER_AGENT,
+          },
+          json: true,
           method: 'POST',
           uri: `https://api.github.com/installations/${installationId}/access_tokens`,
-          json: true,
-          headers: {
-            'User-Agent': process.env.USER_AGENT,
-            'Authorization': 'Bearer ' + jwt,
-            'Accept': 'application/vnd.github.machine-man-preview+json'
-          }
         }).then((response: { expires_at: number, token: string }) => {
           if (!installation) {
             installation = new Installation();

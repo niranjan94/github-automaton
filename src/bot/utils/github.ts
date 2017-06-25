@@ -4,10 +4,10 @@ export class GitHub {
 
   private static options = {
     debug: false,
-    protocol: 'https',
     headers: {
-      'user-agent': process.env.USER_AGENT
-    }
+      'user-agent': process.env.USER_AGENT,
+    },
+    protocol: 'https',
   };
 
   public static createInstance(): GitHubApi {

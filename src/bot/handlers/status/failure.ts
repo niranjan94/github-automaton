@@ -1,12 +1,12 @@
-import { HandlerBase } from '../base';
-import { IFailedJobs, ITravisJob, Travis } from '../../utils/travis';
 import { Operation } from '../../../models/operation';
-import { Messages } from '../../messages';
-import { IComment } from '../../interfaces/comment';
 import { IApiResponse } from '../../interfaces/api-response';
+import { IComment } from '../../interfaces/comment';
+import { Messages } from '../../messages';
+import { IFailedJobs, ITravisJob, Travis } from '../../utils/travis';
+import { HandlerBase } from '../base';
 
 export default class extends HandlerBase {
-  handle() {
+  public handle() {
     const {state, target_url, repository, commit: {author}} = this.payload;
     if (state === 'failure') {
       if (state === 'failure') {
@@ -24,9 +24,9 @@ export default class extends HandlerBase {
               failedJobs.forEach((job: ITravisJob) => {
                 this.queueComment(Messages.buildFailureItem(job.number, repoOwner, repoName, job.id));
               });
-              this.addComments([], initiator, 'issue', repoOwner, repoName, prNumber).then((response: IApiResponse<IComment>) => {
-                const {data} = response;
-                let operation = new Operation();
+              this.addComments([], initiator, 'issue', repoOwner, repoName, prNumber).then((commentResponse: IApiResponse<IComment>) => {
+                const {data} = commentResponse;
+                const operation = new Operation();
                 operation.relatedId = `${repository.full_name}:${prNumber}`;
                 operation.temporaryEntry = true;
                 operation.type = 'build_failed_comment';
@@ -39,4 +39,4 @@ export default class extends HandlerBase {
       }
     }
   }
-};
+}

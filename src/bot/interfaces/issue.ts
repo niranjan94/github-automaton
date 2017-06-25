@@ -1,5 +1,5 @@
-import { IUser } from './user';
 import { ILabel } from './label';
+import { IUser } from './user';
 
 export interface IIssue {
   url: string;

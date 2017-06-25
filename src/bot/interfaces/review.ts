@@ -1,5 +1,5 @@
-import { IUser } from './user';
 import { ILink } from './link';
+import { IUser } from './user';
 
 interface IReviewLinks {
   html: ILink;

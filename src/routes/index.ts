@@ -16,10 +16,7 @@ export class IndexRoute extends BaseRoute {
    * @static
    */
   public static create(router: Router) {
-    //log
     console.log('[IndexRoute::create] Creating index route.');
-
-    //add home page route
     router.get('/', (req: Request, res: Response, next: NextFunction) => {
       new IndexRoute().index(req, res, next);
     });
@@ -47,12 +44,10 @@ export class IndexRoute extends BaseRoute {
    */
   public index(req: Request, res: Response, next: NextFunction) {
 
-    //set message
-    let options: Object = {
-      'message': 'Welcome to the Tour of Heros'
+    const options: object = {
+      message: 'Welcome to the Tour of Heros',
     };
 
-    //render template
     this.render(req, res, 'home', options);
   }
 }
