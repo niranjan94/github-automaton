@@ -1,3 +1,4 @@
+# Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
 logs
@@ -37,9 +38,6 @@ build/Release
 node_modules/
 jspm_packages/
 
-# Typescript v1 declaration files
-typings/
-
 # Optional npm cache directory
 .npm
 
@@ -58,5 +56,6 @@ typings/
 # dotenv environment variables file
 .env
 dist
-data.db
+
+.tscache
 *.private-key.pem
