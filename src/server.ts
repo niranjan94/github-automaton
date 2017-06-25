@@ -69,7 +69,7 @@ export class Server {
     mongoose.connect(process.env.MONGODB_URI);
 
     //add static paths
-    this.app.use(express.static(path.join(__dirname, 'public')));
+    this.app.use(express.static('public'));
 
     this.app.engine('.hbs', expressHandlebars({extname: '.hbs', defaultLayout: 'main'}));
     this.app.set('view engine', '.hbs');
