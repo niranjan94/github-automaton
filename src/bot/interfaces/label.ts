@@ -4,5 +4,4 @@ export interface ILabel {
   name: string;
   color: string;
   default: boolean;
-  number?: number; // Does not exist
 }

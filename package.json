@@ -6,7 +6,7 @@
   "author": "Niranjan Rajendran <niranjan94@yahoo.com>",
   "license": "Apache-2.0",
   "scripts": {
-    "dev": "NODE_ENV=development DEBUG=express:server nodemon ./bin/www",
+    "dev": "NODE_ENV=development DEBUG=express:server nodemon -e js --watch dist ./bin/www",
     "gulp": "gulp",
     "start": "node ./bin/www",
     "build": "gulp scripts",

@@ -1,7 +1,6 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as logger from 'morgan';
-import * as path from 'path';
 import * as expressHandlebars from 'express-handlebars';
 import { IndexRoute } from './routes/index';
 import { EventsRoute } from './routes/events';
