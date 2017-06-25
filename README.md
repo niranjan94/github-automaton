@@ -1,6 +1,8 @@
-## A GitHub Bot + _a bot framework-like thingy_
+# GitHub Automaton
 
-> Inspired by [babel-bot](https://github.com/babel/babel-bot).
+<img src="https://github.com/niranjan94/github-automaton/blob/master/public/img/blue-robot-hi.png?raw=true" width="300">
+
+> A GitHub Bot + _a bot framework-like thingy_ inspired by [babel-bot](https://github.com/babel/babel-bot).
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
@@ -14,7 +16,7 @@
 - Allows moving issues to other repos via comments (`@<bot-name> move to username/repo`).
 - Labels new PRs with `needs-review` tag.
 - Label PRs with `ready-to-ship` once they get merged.
-- Add a comment requesting the PR creater to rebase/resolve conflicts if any conflicts are found on the PR.
+- Add a comment requesting the PR creator to rebase/resolve conflicts if any conflicts are found on the PR.
 
 > All comments that request an action are deleted once the requested action is completed
 
@@ -24,7 +26,7 @@
 
 #### Open Source License
 
-Unless explicitly stated otherwise all files in this repository are licensed under the [Apache Software License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html). All projects **must** properly attribute [The Original Source](https://github.com/niranjan94/github-bot). 
+Unless explicitly stated otherwise all files in this repository are licensed under the [Apache Software License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html). All projects **must** properly attribute [The Original Source](https://github.com/niranjan94/github-automaton). 
 
 ```
 Copyright 2017 Niranjan Rajendran
