@@ -39,6 +39,7 @@ export interface IPullRequest {
   statuses_url: string;
   merged: boolean;
   mergeable?: boolean;
+  rebaseable?: boolean;
   mergeable_state: string;
   merged_by?: any;
   comments: number;
