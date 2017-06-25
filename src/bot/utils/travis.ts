@@ -3,10 +3,11 @@ import * as request from 'request-promise-native';
 import { RequestPromise } from 'request-promise-native';
 
 export interface ITravisJob {
-  id: number;
+  id: string;
   config: {
     os: string;
   },
+  number: string;
   state: string;
   started_at: string;
   finished_at: string;
