@@ -1,28 +1,40 @@
 {
-    "name": "Github Bot",
-    "description": "A bot to manage open source projects",
-    "repository": "https://github.com/niranjan94/github-bot",
-    "keywords": [
-        "github", "bot"
-    ],
-    "env": {
-        "BOT_USERNAME": {
-            "required": true
-        },
-        "BASE64_PRIVATE_KEY": {
-            "required": true
-        },
-        "BOT_ID": {
-            "required": true,
-        },
-        "GITHUB_SECRET": {
-            "generator": "secret"
-        },
-        "NPM_CONFIG_PRODUCTION": "false"
+  "name": "Github Bot",
+  "description": "A bot to manage open source projects on GitHub",
+  "repository": "https://github.com/niranjan94/github-bot",
+  "keywords": [
+    "github",
+    "bot"
+  ],
+  "env": {
+    "BOT_USERNAME": {
+      "description": "Your app's github username. Used for accepting commands.",
+      "required": true
     },
-    "buildpacks": [
-        {
-            "url": "heroku/nodejs"
-        }
-    ]
+    "BASE64_PRIVATE_KEY": {
+      "description": "Base64 encoded string of your app's private key",
+      "required": true
+    },
+    "BOT_ID": {
+      "description": "The integer ID of your bot from your app's settings page",
+      "required": true
+    },
+    "GITHUB_SECRET": {
+      "description": "The secret added by you during your app's configuration on Github",
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "description": "DO NOT EDIT. This value needs to be false for all the required node deps to be downloaded.",
+      "required": true,
+      "value": "false"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "addons": [
+    "mongolab:sandbox"
+  ]
 }

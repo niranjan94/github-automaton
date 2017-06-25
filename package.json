@@ -2,14 +2,15 @@
   "name": "github-bot",
   "version": "1.0.0",
   "description": "A repo management bot for github",
-  "main": "src/index.js",
   "repository": "https://github.com/niranjan94/github-bot",
   "author": "Niranjan Rajendran <niranjan94@yahoo.com>",
   "license": "Apache-2.0",
   "scripts": {
     "dev": "NODE_ENV=development DEBUG=express:server nodemon ./bin/www",
     "gulp": "gulp",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build": "gulp scripts",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
