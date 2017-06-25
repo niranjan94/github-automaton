@@ -73,6 +73,11 @@ export abstract class HandlerBase {
    */
   public abstract handle();
 
+  protected logInfo(info: string) {
+    try {
+      this.logger.info(`[${this.payload.repository.full_name}] ${info}`)
+    } catch (ignored) { /** ignored **/ }
+  }
   /**
    * Queue an issue/PR comment
    *
@@ -145,6 +150,7 @@ export abstract class HandlerBase {
    */
 public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string, _number?: number): Promise<any> {
     const {owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number);
+    this.logInfo(`[Issue/PR: ${number}] adding labels: ${labels.join(',')}.`);
     return this.github.issues.addLabels({
       labels, number, owner, repo,
     });
@@ -163,6 +169,7 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
   public removeLabels(labels = [], _target?: string, _owner?: string, _repo?: string, _number?: number): Promise<any> {
     const {owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number);
     const promises = [];
+    this.logInfo(`[Issue/PR: ${number}] removing labels: ${labels.join(',')}.`);
     labels.forEach((label) => {
       promises.push(this.github.issues.removeLabel({
         name: label,
@@ -185,6 +192,7 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
    */
   public replaceLabels(labels = [], _target?: string, _owner?: string, _repo?: string, _number?: number): Promise<any> {
     const {owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number) as IBasicData<IIssue>;
+    this.logInfo(`[Issue/PR: ${number}] replacing labels: ${labels.join(',')}.`);
     return this.github.issues.replaceAllLabels({
       labels, number, owner, repo,
     });
@@ -215,6 +223,7 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
     }
 
     if (comments.length > 0) {
+      this.logInfo(`Adding comments: (${comments.length}).`);
       this.commentQueue = [];
       return this.github.issues.createComment({
         body: comments.join(`\n\n`).trim(),
@@ -239,6 +248,7 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
       id = primary.id;
     }
     id = String(id);
+    this.logInfo(`Deleting comment ID: ${id}.`);
     return this.github.issues.deleteComment({
       id, owner, repo,
     });
@@ -255,6 +265,7 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
    */
   public createIssue(title: string, body = '', _owner?: string, _repo?: string): Promise<any> {
     const {owner, repo} = this.getBasicData('issue', _owner, _repo);
+    this.logInfo(`Creating issue with title; ${title}`);
     return this.github.issues.create({
       body, owner, repo, title,
     });
@@ -270,6 +281,7 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
    */
   public closeIssue(_number?: number, _owner?: string, _repo?: string): Promise<any> {
     const {owner, repo, number} = this.getBasicData('issue', _owner, _repo, _number);
+    this.logInfo(`[Issue: ${number}] closing issue.`);
     return this.github.issues.edit({
       number, owner, repo,
       state: 'closed',
@@ -286,6 +298,7 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
    */
   public openIssue(_number?: number, _owner?: string, _repo?: string): Promise<any> {
     const {owner, repo, number} = this.getBasicData('issue', _owner, _repo, _number);
+    this.logInfo(`[Issue: ${number}] opening issue.`);
     return this.github.issues.edit({
       number, owner, repo,
       state: 'open',
@@ -302,6 +315,7 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
    */
   public lockIssue(_number?: number, _owner?: string, _repo?: string): Promise<any> {
     const {owner, repo, number} = this.getBasicData('issue', _owner, _repo, _number);
+    this.logInfo(`[Issue: ${number}] locking issue.`);
     return this.github.issues.lock({number, owner, repo});
   }
 
@@ -315,6 +329,7 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
    */
   public unlockIssue(_number?: number, _owner?: string, _repo?: string): Promise<any> {
     const {owner, repo, number} = this.getBasicData('issue', _owner, _repo, _number);
+    this.logInfo(`[Issue: ${number}] unlocking issue.`);
     return this.github.issues.unlock({number, owner, repo});
   }
 
@@ -329,6 +344,7 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
    */
   public createPrReviewRequest(users: string[], _owner?: string, _repo?: string, _number?: number) {
     const {owner, repo, number} = this.getBasicData('pull_request', _owner, _repo, _number);
+    this.logInfo(`[PR: ${number}] Creating PR review request to users: ${users.join(',')}`);
     return this.github.pullRequests.createReviewRequest({number, owner, repo, reviewers: users});
   }
 

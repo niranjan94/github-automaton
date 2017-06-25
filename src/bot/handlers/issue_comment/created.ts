@@ -50,6 +50,7 @@ export default class extends HandlerBase {
         this.moveIssue(organization, login, issue, newOwner, newRepo);
       } else {
         this.logger.info(`Cannot move to same repo ${repository.full_name} >> ${moveToTarget}.`);
+        return this.deleteComment();
       }
     }
   }

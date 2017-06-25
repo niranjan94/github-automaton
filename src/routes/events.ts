@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { BaseRoute } from './route';
+import { responder } from '../bot/responder';
 
 /**
  * / route
@@ -40,7 +41,9 @@ export class EventsRoute extends BaseRoute {
    * @param next
    */
   public processEvent(req: Request, res: Response, next: NextFunction) {
-
+    const signature = req.get('X-Hub-Signature');
+    const type = req.get('X-GitHub-Event');
+    responder(signature, req.body, type);
     res.set('Content-Type', 'text/plain');
     if (process.env.USER_AGENT) {
       res.set('User-Agent', process.env.USER_AGENT);
