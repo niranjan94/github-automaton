@@ -234,6 +234,26 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
   }
 
   /**
+   *
+   * Add a plain single comment (will ignore the queue)
+   *
+   * @param comment
+   * @param _target
+   * @param _owner
+   * @param _repo
+   * @param _number
+   * @return {Promise}
+   */
+  public addPlainComment(comment: string, _target?: string, _owner?: string, _repo?: string, _number?: number): Promise<any> {
+    const {owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number) as IBasicData<IIssue>;
+    this.logInfo(`Adding comment: (${comment}).`);
+    return this.github.issues.createComment({
+      body: comment,
+      number, owner, repo,
+    });
+  }
+
+  /**
    * Delete a comment
    *
    * @param id

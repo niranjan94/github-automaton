@@ -81,4 +81,13 @@ export class Messages {
             Could you rebase it on top of the latest upstream code ?
         `;
   }
+
+  public static reviewPlease(users: string[]): string {
+    users.map((user) => `@${user.trim()}`);
+    return stripIndent`
+            ${users.join(' ')}
+            Review please :smile:
+        `;
+  }
+
 }
