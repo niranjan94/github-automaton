@@ -19,6 +19,7 @@ export interface IEventBase {
   context: string;
   description?: any;
   state: string;
+  repository_selection?: string;
 
   created_at?: string;
   updated_at?: string;
@@ -33,4 +34,6 @@ export interface IEventBase {
   repository?: IRepository;
   sender: IUser;
   installation?: IInstallation;
+  repositories_added?: IRepository[];
+  repositories_removed?: IRepository[];
 }

@@ -2,9 +2,10 @@ import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
-import * as request from 'request-promise-native';
 import * as winston from 'winston';
+
 import { IInstallationModel, Installation } from '../../models/installation';
+import { GitHub } from './github';
 
 export class Auth {
 
@@ -52,10 +53,10 @@ export class Auth {
    * @param username
    * @return {Promise<string>}
    */
-  public static getIntegrationAccessToken(installationId: number, username: string): Promise<string> {
+  public static getIntegrationAccessToken(installationId: number, username?: string): Promise<string> {
     return new Promise((resolve) => {
-      Installation.findOne({installationId}, (e, installation: IInstallationModel) => {
-        if (!e && installation) {
+      Installation.findOne({installationId}, (err, installation: IInstallationModel) => {
+        if (!err && installation && installation.hasOwnProperty('expiresAt') && installation.expiresAt) {
           const expiresAt = moment(installation.expiresAt);
           if (expiresAt.isAfter(moment().add(5, 'minutes'))) {
             return resolve(installation.token);
@@ -64,33 +65,35 @@ export class Auth {
 
         winston.info('Requesting integration access token for ID ' + installationId);
 
-        const jwt = Auth.getIntegrationToken();
-
-        request({
-          headers: {
-            'Accept': 'application/vnd.github.machine-man-preview+json',
-            'Authorization': 'Bearer ' + jwt,
-            'User-Agent': process.env.USER_AGENT,
-          },
-          json: true,
-          method: 'POST',
-          uri: `https://api.github.com/installations/${installationId}/access_tokens`,
-        }).then((response: { expires_at: string, token: string }) => {
-          if (!installation) {
-            installation = new Installation();
-          }
-
-          console.log(response.expires_at);
-          installation.installationId = installationId;
-          installation.token = response.token;
-          installation.expiresAt = response.expires_at;
-          installation.username = username;
-          installation.save().then(() => {
-            resolve(response.token);
-          });
-        }).catch((eTwo) => {
-          winston.error(`error while requesting integration token. ${eTwo}`);
+        const github = GitHub.createInstance();
+        github.authenticate({
+          token: Auth.getIntegrationToken(),
+          type: 'integration',
         });
+
+        github.integrations
+          .createInstallationToken({
+            installation_id: String(installationId),
+          })
+          .then((response) => {
+            const {data} = response;
+            if (!installation) {
+              installation = new Installation();
+            }
+            winston.info(`New integration token obtained. Expires at ${data.expires_at}`);
+            installation.installationId = installationId;
+            installation.token = data.token;
+            installation.expiresAt = data.expires_at;
+            if (username) {
+              installation.username = username;
+            }
+            installation.save().then(() => {
+              resolve(data.token);
+            });
+          })
+          .catch((e) => {
+            winston.error(`error while requesting integration token. ${e}`);
+          });
       });
     });
   }
