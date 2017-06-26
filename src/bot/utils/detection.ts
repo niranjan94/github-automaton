@@ -1,5 +1,7 @@
+import { uniq } from 'lodash';
+
 export class Detector {
-  private static issueNumberRegExp = new RegExp('\\B\\#\\d\\d+\\b', 'g');
+  private static issueNumberRegExp = new RegExp('((?:issues)\\/(\\d+)|\\#\\d+)', 'g');
   private static emojiDetectionRegExp = new RegExp('(?:[\\u2700-\\u27bf]|(?:\\ud83c[\\udde6-\\uddff]){2}|[\\ud800-\\udbff][\\udc00-\\udfff]' +
     '|[\\u0023-\\u0039]\\ufe0f?\\u20e3|\\u3299|\\u3297|\\u303d|\\u3030|\\u24c2|\\ud83c[\\udd70-\\udd71]|\\ud83c[\\udd7e-\\udd7f]' +
     '|\\ud83c\\udd8e|\\ud83c[\\udd91-\\udd9a]|\\ud83c[\\udde6-\\uddff]|\\ud83c[\\ude01-\\ude02]|\\ud83c\\ude1a|\\ud83c\\ude2f' +
@@ -15,8 +17,13 @@ export class Detector {
    * @return {string[]}
    */
   public static findIssueNumbers(searchText: string): string[] {
-    const result = searchText.match(Detector.issueNumberRegExp);
-    return result ? result : [];
+    let issueNumbers = searchText.match(Detector.issueNumberRegExp);
+    issueNumbers = issueNumbers ? issueNumbers : [];
+    return uniq(
+      issueNumbers.map(
+        (issueNumber) => issueNumber.toLowerCase().replace('issues/', '').replace('#', '').trim(),
+      ),
+    );
   }
 
   /**
@@ -50,14 +57,20 @@ export class Detector {
    * Read comment and get issue move command if exists
    *
    * @param comment
-   * @return {null}
+   * @return {string|null}
    */
-  public static getIssueMoveCommand(comment: string) {
+  public static getIssueMoveCommand(comment: string): string | null {
     const [, targetRepo] = comment.match(Detector.issueMoveCommandRegExp) || [null, null];
     return (targetRepo) ? targetRepo : null;
   }
 
-  public static isDoNotMerge(label: string) {
+  /**
+   * Check if a label states anything similar to 'Do not merge'
+   *
+   * @param label
+   * @return {boolean}
+   */
+  public static isDoNotMerge(label: string): boolean {
     label = label.toLowerCase();
     return label === 'do not merge' || label === 'do-not-merge' || label === 'wip' || label === 'w.i.p' || label === 'dont merge' || label === 'dont-merge';
   }

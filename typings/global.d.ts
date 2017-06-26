@@ -11,6 +11,7 @@ interface process {
     MONGODB_URI: string,
     USER_AGENT: string,
     BASE64_PRIVATE_KEY?: string,
-    STANDARD_REVIEWERS?: string
+    STANDARD_REVIEWERS?: string,
+    DISALLOW_PR_WITHOUT_ISSUE?: string
   }
 }

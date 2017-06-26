@@ -74,7 +74,7 @@ export abstract class HandlerBase {
    */
   public abstract handle();
 
-  protected logInfo(info: string) {
+  public logInfo(info: string) {
     try {
       this.logger.info(`[${this.payload.repository.full_name}] ${info}`);
     } catch (ignored) { /* ignored */ }
@@ -84,7 +84,7 @@ export abstract class HandlerBase {
    *
    * @param body
    */
-  protected queueComment(body) {
+  public queueComment(body) {
     this.commentQueue.push(body);
   }
 
@@ -96,7 +96,7 @@ export abstract class HandlerBase {
    * @param target
    * @return {*}
    */
-  protected getPrimaryPayload(target?: string): IPrimaryPayload<any> | null {
+  public getPrimaryPayload(target?: string): IPrimaryPayload<any> | null {
     if (target === 'pull_request' || (!target && this.payload.hasOwnProperty('pull_request'))) {
       return {primary: this.payload.pull_request, apiTarget: (!target ? 'issues' : 'pullRequests')};
     } else if (target === 'issue' || (!target && this.payload.hasOwnProperty('issue'))) {
@@ -120,7 +120,7 @@ export abstract class HandlerBase {
    * @param number
    * @return {{primary: (IIssue|IPullRequest|ILabel|IComment|IReview), apiTarget: string, owner: string, repo: string, number: number}}
    */
-  protected getBasicData(target?: string, owner?: string, repo?: string, number?: number): IBasicData<any> {
+  public getBasicData(target?: string, owner?: string, repo?: string, number?: number): IBasicData<any> {
     const {primary, apiTarget} = this.getPrimaryPayload(target);
 
     if (!owner) {
@@ -149,7 +149,7 @@ export abstract class HandlerBase {
    *
    * @return {Promise}
    */
-public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string, _number?: number): Promise<any> {
+  public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string, _number?: number): Promise<any> {
     const {owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number);
     this.logInfo(`[Issue/PR: ${number}] adding labels: ${labels.join(',')}.`);
     return this.github.issues.addLabels({

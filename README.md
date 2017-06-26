@@ -17,6 +17,7 @@
 - Labels new PRs with `needs-review` tag.
 - Label PRs with `ready-to-ship` once they get merged.
 - Add a comment requesting the PR creator to rebase/resolve conflicts if any conflicts are found on the PR.
+- Request the PR creator to link the PR to a specific issue, if no link is found and add `has-PR` tag to the linked issue.
 
 > All comments that request an action are deleted once the requested action is completed
 

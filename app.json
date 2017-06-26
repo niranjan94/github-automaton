@@ -27,6 +27,11 @@
       "description": "A comma separated list of github usernames to add as reviewers to PRs.",
       "required": false
     },
+    "DISALLOW_PR_WITHOUT_ISSUE": {
+      "description": "Don't allow Pull requests without an issue linked to them (A comment will be added asking for a link).",
+      "required": true,
+      "value": "false"
+    },
     "NPM_CONFIG_PRODUCTION": {
       "description": "DO NOT EDIT. This value needs to be false for all the required node deps to be downloaded.",
       "required": true,
