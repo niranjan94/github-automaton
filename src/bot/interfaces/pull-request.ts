@@ -32,6 +32,8 @@ export interface IPullRequest {
   merge_commit_sha?: any;
   assignee?: any;
   milestone?: any;
+  requested_reviewers?: string[];
+  assignees?: string[];
   commits_url: string;
   review_comments_url: string;
   review_comment_url: string;

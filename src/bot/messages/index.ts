@@ -83,7 +83,7 @@ export class Messages {
   }
 
   public static reviewPlease(users: string[]): string {
-    users.map((user) => `@${user.trim()}`);
+    users = users.map((user) => `@${user.trim()}`);
     return stripIndent`
             ${users.join(' ')}
             Review please :smile:

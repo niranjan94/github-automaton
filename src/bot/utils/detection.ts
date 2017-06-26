@@ -56,4 +56,9 @@ export class Detector {
     const [, targetRepo] = comment.match(Detector.issueMoveCommandRegExp) || [null, null];
     return (targetRepo) ? targetRepo : null;
   }
+
+  public static isDoNotMerge(label: string) {
+    label = label.toLowerCase();
+    return label === 'do not merge' || label === 'do-not-merge' || label === 'wip' || label === 'w.i.p' || label === 'dont merge' || label === 'dont-merge';
+  }
 }

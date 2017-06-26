@@ -1,6 +1,7 @@
 import * as GitHubApi from 'github';
 import * as winston from 'winston';
 
+import { IApiResponse } from '../interfaces/api-response';
 import { IComment } from '../interfaces/comment';
 import { IEventBase } from '../interfaces/event-base';
 import { IIssue } from '../interfaces/issue';
@@ -384,4 +385,16 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
     return this.github.issues.addAssigneesToIssue({assignees: users, number, owner, repo});
   }
 
+  /**
+   * Get current labels
+   *
+   * @param _owner
+   * @param _repo
+   * @param _number
+   * @return {Promise}
+   */
+  public getCurrentLabels(_owner?: string, _repo?: string, _number?: number): Promise<IApiResponse<ILabel[]>> {
+    const {owner, repo, number} = this.getBasicData('pull_request', _owner, _repo, _number);
+    return this.github.issues.getIssueLabels({number, owner, repo});
+  }
 }
