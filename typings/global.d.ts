@@ -3,13 +3,14 @@
  */
 interface process {
   env: {
-    PORT?: Number,
-    BOT_USERNAME: String,
-    BOT_ID: String,
-    KEY_FILE_NAME?: String,
-    GITHUB_SECRET: String,
-    MONGODB_URI: String,
-    USER_AGENT: String,
-    BASE64_PRIVATE_KEY?: String
+    PORT?: number,
+    BOT_USERNAME: string,
+    BOT_ID: string,
+    KEY_FILE_NAME?: string,
+    GITHUB_SECRET: string,
+    MONGODB_URI: string,
+    USER_AGENT: string,
+    BASE64_PRIVATE_KEY?: string,
+    STANDARD_REVIEWERS?: string
   }
 }

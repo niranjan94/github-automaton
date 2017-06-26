@@ -23,6 +23,10 @@
       "description": "The secret added by you during your app's configuration on Github",
       "required": true
     },
+    "STANDARD_REVIEWERS": {
+      "description": "A comma separated list of github usernames to add as reviewers to PRs.",
+      "required": false
+    },
     "NPM_CONFIG_PRODUCTION": {
       "description": "DO NOT EDIT. This value needs to be false for all the required node deps to be downloaded.",
       "required": true,

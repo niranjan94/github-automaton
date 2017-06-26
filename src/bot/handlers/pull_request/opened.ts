@@ -6,7 +6,12 @@ export default class extends HandlerBase {
     const {primary: {number, user: {login}, base}} = this.getBasicData() as IBasicData<IPullRequest>;
     this.replaceLabels(['needs-review']);
     const {repository} = this.payload;
-    console.log(`https://github.com/${repository.full_name}`);
-    console.log(number, login, base.ref);
+    this.assignUsersToIssue([login]);
+    if (process.env.STANDARD_REVIEWERS && process.env.STANDARD_REVIEWERS.trim() !== '') {
+      console.log(`https://github.com/${repository.full_name}`);
+      console.log(number, login, base.ref);
+      const reviewers = process.env.STANDARD_REVIEWERS.split(',').filter((user) => user !== login);
+      this.createPrReviewRequest(reviewers);
+    }
   }
 }

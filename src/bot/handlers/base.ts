@@ -342,10 +342,26 @@ public addLabels(labels = [], _target?: string, _owner?: string, _repo?: string,
    * @param _number
    * @return {Promise}
    */
-  public createPrReviewRequest(users: string[], _owner?: string, _repo?: string, _number?: number) {
+  public createPrReviewRequest(users: string[], _owner?: string, _repo?: string, _number?: number): Promise<any> {
     const {owner, repo, number} = this.getBasicData('pull_request', _owner, _repo, _number);
     this.logInfo(`[PR: ${number}] Creating PR review request to users: ${users.join(',')}`);
     return this.github.pullRequests.createReviewRequest({number, owner, repo, reviewers: users});
+  }
+
+  /**
+   *
+   * Assign a PR/Issue to users
+   *
+   * @param users
+   * @param _owner
+   * @param _repo
+   * @param _number
+   * @return {Promise}
+   */
+  public assignUsersToIssue(users: string[], _owner?: string, _repo?: string, _number?: number): Promise<any> {
+    const {owner, repo, number} = this.getBasicData('pull_request', _owner, _repo, _number);
+    this.logInfo(`[Issue/PR: ${number}] Issue/PR being assigned to users: ${users.join(',')}`);
+    return this.github.issues.addAssigneesToIssue({assignees: users, number, owner, repo});
   }
 
 }
