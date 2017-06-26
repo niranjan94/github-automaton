@@ -14,10 +14,10 @@ export class Messages {
 
             Please make sure you have the following information in this issue:
 
-            1. The current (incorrect) behavior you're seeing
-            2. The behavior you expect
-            3. The browser & OS you use
-            4. A [short, self-contained example](http://sscce.org/)
+            1. The current (incorrect) behavior you're seeing.
+            2. The behavior you expect.
+            3. The OS version, browser, app, device you use.
+            4. A [short, self-contained example](http://sscce.org/).
         `;
   }
 
