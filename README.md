@@ -9,21 +9,21 @@
 
 #### What can this do ?
 
-- Add a comment and a label asking for more information if an newly created issue has less information.
-- Add a comment asking for more info if an issue is labelled with `needs-info`.
-- Add a comment if a PR build fails with a link to the logs. (Only travis supported).
-- Delete pointless comments that have +1, -1 or only emojis.
-- Allows moving issues to other repos via comments (`@<bot-name> move to username/repo`).
-- Labels new PRs with `needs-review` tag.
-- Label PRs with `ready-to-ship` once they get merged.
-- Add a comment requesting the PR creator to rebase/resolve conflicts if any conflicts are found on the PR.
+- Add a comment and a label asking for more information if a newly created issue has less information
+- Add a comment asking for more info if an issue is labelled with `needs-info`
+- Add a comment if a PR build fails with a link to the logs. (Only travis supported)
+- Delete pointless comments that have +1, -1 or only emojis
+- Allow moving issues to other repos via comments (`@<bot-name> move to username/repo`)
+- Label new PRs with `needs-review` tag
+- Label PRs with `ready-to-ship` once they get merged
+- Add a comment requesting the PR creator to rebase/resolve conflicts if any conflicts are found on the PR
 - Request the PR creator to link the PR to a specific issue, if no link is found and add `has-PR` tag to the linked issue.
 
 > All comments that request an action are deleted once the requested action is completed
 
 #### What can this do in a few weeks ?
 - Auto request PR reviews from contributors based on blame info from the files changed. (Using [mention-bot](https://github.com/facebook/mention-bot)'s programmatic API)
-- Search for preview deployment links in PRs and request for them if not found.
+- Search for preview deployment links in PRs and request for them if not found
 
 #### Open Source License
 
