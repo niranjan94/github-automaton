@@ -9,7 +9,6 @@ export default class extends HandlerBase {
       this.replaceLabels(['ready-to-ship']);
     } else {
       this.replaceLabels(['invalid']);
-      this.addComments([Messages.closedWithoutMerging()]);
     }
   }
 }
