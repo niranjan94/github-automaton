@@ -10,7 +10,7 @@ export default class extends HandlerBase {
       Operation.findOne({
         relatedId: id,
         temporaryEntry: true,
-        type: 'needs_info_comment',
+        type: 'needs_info_comment'
       }).then((operation: IOperationModel) => {
         this.deleteComment(operation.selfId);
         operation.remove();

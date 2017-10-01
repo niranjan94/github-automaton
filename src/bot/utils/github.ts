@@ -5,9 +5,9 @@ export class GitHub {
   private static options = {
     debug: false,
     headers: {
-      'user-agent': process.env.USER_AGENT,
+      'user-agent': process.env.USER_AGENT
     },
-    protocol: 'https',
+    protocol: 'https'
   };
 
   public static createInstance(): GitHubApi {

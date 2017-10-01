@@ -14,7 +14,7 @@ export interface IInstallationModel extends Document {
 }
 
 const installationSchema: Schema = new Schema({
-  account: userSchema,
+  account: userSchema as any,
   appId: Number,
   expiresAt: String,
   htmlUrl: String,
@@ -22,7 +22,7 @@ const installationSchema: Schema = new Schema({
   targetId: Number,
   targetType: String,
   token: String,
-  username: String,
+  username: String
 });
 
 export const Installation: Model<IInstallationModel> = model<IInstallationModel>('Installation', installationSchema);

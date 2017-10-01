@@ -45,7 +45,7 @@ export class IndexRoute extends BaseRoute {
   public index(req: Request, res: Response, next: NextFunction) {
 
     const options: object = {
-      message: 'Welcome to the Tour of Heros',
+      message: 'Welcome to the Tour of Heros'
     };
 
     this.render(req, res, 'home', options);

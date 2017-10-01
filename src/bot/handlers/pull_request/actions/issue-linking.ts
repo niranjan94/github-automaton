@@ -17,7 +17,7 @@ export class IssueLinkingAction {
     Operation.findOne({
       relatedId: handler.getBasicData().primary.id,
       temporaryEntry: true,
-      type: 'not_linked_comment',
+      type: 'not_linked_comment'
     }, (err, existingOperation: IOperationModel) => {
       if (issueNumbers.length === 0) {
         handler.logInfo(`No linked issues found for PR ${number}.`);

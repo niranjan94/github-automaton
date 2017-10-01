@@ -30,4 +30,4 @@ install:
   - yarn
 
 script:
-  - npm run test
+  - yarn test

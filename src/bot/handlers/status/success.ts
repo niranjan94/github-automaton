@@ -18,7 +18,7 @@ export default class extends HandlerBase {
             Operation.findOne({
               relatedId: `${repository.full_name}:${prNumber}`,
               temporaryEntry: true,
-              type: 'build_failed_comment',
+              type: 'build_failed_comment'
             }).then((operation: IOperationModel) => {
               this.deleteComment(operation.selfId, repoOwner, repoName);
               operation.remove();

@@ -24,7 +24,7 @@ export default class extends HandlerBase {
         login: installation.account.login,
         siteAdmin: installation.account.site_admin,
         type: installation.account.type,
-        userId: installation.account.id,
+        userId: installation.account.id
       });
 
       installationRecord

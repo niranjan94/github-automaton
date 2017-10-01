@@ -30,7 +30,7 @@ export class Travis {
   private static buildIdRe = /.+\/(\d+)/;
   private static headers = {
     'Accept': 'application/vnd.travis-ci.2+json',
-    'User-Agent': process.env.USER_AGENT,
+    'User-Agent': process.env.USER_AGENT
   };
 
   /**
@@ -47,7 +47,7 @@ export class Travis {
       headers: Travis.headers,
       json: true,
       method: 'GET',
-      uri: `${Travis.API_BASE}/repos/${repoOwner}/${repo}/builds/${buildId}`,
+      uri: `${Travis.API_BASE}/repos/${repoOwner}/${repo}/builds/${buildId}`
     });
   }
 
@@ -84,7 +84,7 @@ export class Travis {
           if (prNumber) {
             resolve({
               failedJobs: response.jobs.filter((build) => build.state === 'failed'),
-              prNumber,
+              prNumber
             });
           }
         });

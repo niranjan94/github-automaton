@@ -11,7 +11,7 @@ const operationSchema: Schema = new Schema({
   relatedId: String,
   selfId: String,
   temporaryEntry: Boolean,
-  type: String,
+  type: String
 });
 
 export const Operation: Model<IOperationModel> = model<IOperationModel>('Operation', operationSchema);

@@ -1,11 +1,11 @@
 import * as bodyParser from 'body-parser';
+import * as errorHandler from 'errorhandler';
 import * as express from 'express';
 import * as expressHandlebars from 'express-handlebars';
 import * as mongoose from 'mongoose';
 import * as logger from 'morgan';
 import { EventsRoute } from './routes/events';
 import { IndexRoute } from './routes/index';
-import errorHandler = require('errorhandler');
 
 /**
  * The server.
@@ -66,7 +66,7 @@ export class Server {
     this.app.use(bodyParser.json());
 
     this.app.use(bodyParser.urlencoded({
-      extended: true,
+      extended: true
     }));
 
     this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

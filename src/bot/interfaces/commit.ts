@@ -4,17 +4,17 @@ export interface IInnerCommit {
   author: {
     name: string,
     email: string,
-    date: string,
+    date: string
   };
   committer: {
     name: string,
     email: string,
-    date: string,
+    date: string
   };
   message: string;
   tree: {
     sha: string,
-    url: string,
+    url: string
   };
   url: string;
   comment_count: number;

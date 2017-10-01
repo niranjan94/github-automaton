@@ -11,7 +11,7 @@ export default class extends HandlerBase {
     this.github.pullRequests.get({
       number,
       owner: repository.owner.login,
-      repo: repository.name,
+      repo: repository.name
     }).then((response: IApiResponse<IPullRequest>) => {
       const {mergeable, rebaseable} = response.data;
       if (!mergeable && !rebaseable) {

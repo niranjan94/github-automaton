@@ -6,7 +6,7 @@ import { IssueLinkingAction } from './actions/issue-linking';
 
 export default class extends HandlerBase {
   public handle() {
-    const {primary: {number, user: {login}, base, requested_reviewers, body}} = this.getBasicData() as IBasicData<IPullRequest>;
+    const {primary: {number, user: {login}, base, requested_reviewers}} = this.getBasicData() as IBasicData<IPullRequest>;
     this.getCurrentLabels().then((labelsData) => {
       const { data } = labelsData;
       let hasDoNotMerge = false;

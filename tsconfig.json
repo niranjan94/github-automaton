@@ -3,7 +3,9 @@
     "module": "commonjs",
     "target": "es6",
     "sourceMap": true,
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "removeComments": true,
+    "lib": ["es2017", "dom"]
   },
   "include": [
     "src/**/*.ts"

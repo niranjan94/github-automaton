@@ -15,7 +15,7 @@ export const userSchema: Schema = new Schema({
   login: String,
   siteAdmin: Boolean,
   type: String,
-  userId: Number,
+  userId: Number
 });
 
 export const User: Model<IUserModel> = model<IUserModel>('User', userSchema);

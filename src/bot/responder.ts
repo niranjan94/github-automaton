@@ -8,7 +8,7 @@ export const responder = (signature, data, type) => {
   const isAuthValid = Auth.isBodyValid(
     JSON.stringify(data),
     signature,
-    process.env.GITHUB_SECRET || '',
+    process.env.GITHUB_SECRET || ''
   );
 
   if (!isAuthValid) {

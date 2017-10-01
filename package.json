@@ -10,8 +10,8 @@
     "gulp": "gulp",
     "start": "node ./bin/www",
     "build": "gulp scripts",
-    "test": "tslint -c tslint.json 'src/**/*.ts'",
-    "tslint-fix": "tslint -c tslint.json 'src/**/*.ts' --fix",
+    "test": "tslint --project tsconfig.json -c tslint.json --type-check 'src/**/*.ts'",
+    "tslint-fix": "tslint --project tsconfig.json -c tslint.json --type-check 'src/**/*.ts' --fix",
     "postinstall": "npm run build"
   },
   "dependencies": {
@@ -21,7 +21,7 @@
     "errorhandler": "^1.4.3",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
-    "github": "^9.2.0",
+    "github": "^11.0.0",
     "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
@@ -38,7 +38,6 @@
     "@types/errorhandler": "0.0.30",
     "@types/express": "^4.0.36",
     "@types/express-handlebars": "^0.0.29",
-    "@types/github": "^7.1.0",
     "@types/jsonwebtoken": "^7.2.1",
     "@types/lodash": "^4.14.66",
     "@types/moment": "^2.13.0",

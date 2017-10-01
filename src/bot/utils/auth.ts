@@ -26,7 +26,7 @@ export class Auth {
 
     return crypto.timingSafeEqual(
       new Buffer(signature),
-      new Buffer(`sha1=${newSignature}`),
+      new Buffer(`sha1=${newSignature}`)
     );
   }
 
@@ -41,7 +41,7 @@ export class Auth {
     const payload = {
       exp: moment().utc().add(4, 'minutes').unix(),
       iat: moment().utc().unix(),
-      iss: parseInt(process.env.BOT_ID),
+      iss: parseInt(process.env.BOT_ID)
     };
 
     return jwt.sign(payload, cert, {algorithm: 'RS256'});
@@ -68,12 +68,12 @@ export class Auth {
         const github = GitHub.createInstance();
         github.authenticate({
           token: Auth.getIntegrationToken(),
-          type: 'integration',
+          type: 'integration'
         });
 
         github.integrations
           .createInstallationToken({
-            installation_id: String(installationId),
+            installation_id: String(installationId)
           })
           .then((response) => {
             const {data} = response;

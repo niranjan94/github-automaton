@@ -6,8 +6,6 @@ import { IComment } from '../interfaces/comment';
 import { IEventBase } from '../interfaces/event-base';
 import { IIssue } from '../interfaces/issue';
 import { ILabel } from '../interfaces/label';
-import { IPullRequest } from '../interfaces/pull-request';
-import { IReview } from '../interfaces/review';
 import { Messages } from '../messages';
 import { Auth } from '../utils/auth';
 import { GitHub } from '../utils/github';
@@ -60,7 +58,7 @@ export abstract class HandlerBase {
     Auth.getIntegrationAccessToken(this.payload.installation.id, username).then((token) => {
       this.github.authenticate({
         token,
-        type: 'token',
+        type: 'token'
       });
       this.logger.info('Token obtained. Handling event now.');
       this.handle();
@@ -153,7 +151,7 @@ export abstract class HandlerBase {
     const {owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number);
     this.logInfo(`[Issue/PR: ${number}] adding labels: ${labels.join(',')}.`);
     return this.github.issues.addLabels({
-      labels, number, owner, repo,
+      labels, number, owner, repo
     });
   }
 
@@ -174,7 +172,7 @@ export abstract class HandlerBase {
     labels.forEach((label) => {
       promises.push(this.github.issues.removeLabel({
         name: label,
-        number, owner, repo,
+        number, owner, repo
       }));
     });
     return Promise.all(promises);
@@ -195,7 +193,7 @@ export abstract class HandlerBase {
     const {owner, repo, number} = this.getBasicData(_target, _owner, _repo, _number) as IBasicData<IIssue>;
     this.logInfo(`[Issue/PR: ${number}] replacing labels: ${labels.join(',')}.`);
     return this.github.issues.replaceAllLabels({
-      labels, number, owner, repo,
+      labels, number, owner, repo
     });
   }
 
@@ -228,7 +226,7 @@ export abstract class HandlerBase {
       this.commentQueue = [];
       return this.github.issues.createComment({
         body: comments.join(`\n\n`).trim(),
-        number, owner, repo,
+        number, owner, repo
       });
     }
     return new Promise((resolve, reject) => reject('No comments added.'));
@@ -250,7 +248,7 @@ export abstract class HandlerBase {
     this.logInfo(`Adding comment: (${comment}).`);
     return this.github.issues.createComment({
       body: comment,
-      number, owner, repo,
+      number, owner, repo
     });
   }
 
@@ -271,7 +269,7 @@ export abstract class HandlerBase {
     id = String(id);
     this.logInfo(`Deleting comment ID: ${id}.`);
     return this.github.issues.deleteComment({
-      id, owner, repo,
+      id, owner, repo
     });
   }
 
@@ -288,7 +286,7 @@ export abstract class HandlerBase {
     const {owner, repo} = this.getBasicData('issue', _owner, _repo);
     this.logInfo(`Creating issue with title; ${title}`);
     return this.github.issues.create({
-      body, owner, repo, title,
+      body, owner, repo, title
     });
   }
 
@@ -305,7 +303,7 @@ export abstract class HandlerBase {
     this.logInfo(`[Issue: ${number}] closing issue.`);
     return this.github.issues.edit({
       number, owner, repo,
-      state: 'closed',
+      state: 'closed'
     });
   }
 
@@ -322,7 +320,7 @@ export abstract class HandlerBase {
     this.logInfo(`[Issue: ${number}] opening issue.`);
     return this.github.issues.edit({
       number, owner, repo,
-      state: 'open',
+      state: 'open'
     });
   }
 

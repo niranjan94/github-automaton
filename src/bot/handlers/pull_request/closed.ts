@@ -1,5 +1,4 @@
 import { IPullRequest } from '../../interfaces/pull-request';
-import { Messages } from '../../messages';
 import { HandlerBase, IBasicData } from '../base';
 
 export default class extends HandlerBase {
@@ -9,6 +8,8 @@ export default class extends HandlerBase {
       this.replaceLabels(['ready-to-ship']);
     } else {
       this.replaceLabels(['invalid']);
+      // this.addComments([Messages.closedWithoutMerging()]);
+      // Removing this comment for now.
     }
   }
 }

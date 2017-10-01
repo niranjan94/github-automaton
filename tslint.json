@@ -4,10 +4,23 @@
     "tslint:recommended"
   ],
   "rules": {
+    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
     "radix": false,
     "no-console": false,
     "variable-name": [true, "check-format", "allow-leading-underscore", "allow-pascal-case"],
     "member-ordering": false,
+    "ordered-imports": false,
+    "no-unused-variable": true,
+    "max-classes-per-file": [true, 2],
+    "key-spacing": [
+      "error", {
+        "align": {
+          "beforeColon": true,
+          "afterColon": true,
+          "on": "colon"
+        }
+      }
+    ],
     "quotemark": [
       true,
       "single",

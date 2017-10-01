@@ -18,7 +18,7 @@ export default class extends HandlerBase {
   private moveIssue(organization: string, login: string, issue: IIssue, owner: string, repo: string) {
     this.github.orgs.checkMembership({
       org: organization,
-      username: login,
+      username: login
     }).then(() => {
       this.createIssue(issue.title, Messages.movedIssueBody(login, issue.html_url, issue.body), owner, repo)
         .then((response: IApiResponse<IIssue>) => {

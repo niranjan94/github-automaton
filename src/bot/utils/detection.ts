@@ -21,8 +21,8 @@ export class Detector {
     issueNumbers = issueNumbers ? issueNumbers : [];
     return uniq(
       issueNumbers.map(
-        (issueNumber) => issueNumber.toLowerCase().replace('issues/', '').replace('#', '').trim(),
-      ),
+        (issueNumber) => issueNumber.toLowerCase().replace('issues/', '').replace('#', '').trim()
+      )
     );
   }
 
