@@ -8,7 +8,7 @@ export default class extends HandlerBase {
     const {primary: {number}} = this.getBasicData() as IBasicData<IPullRequest>;
     const {repository} = this.payload;
 
-    this.github.pullRequests.get({
+    /* this.github.pullRequests.get({
       number,
       owner: repository.owner.login,
       repo: repository.name
@@ -19,6 +19,6 @@ export default class extends HandlerBase {
       } else if (!rebaseable) {
         this.addComments([Messages.prCannotBeRebased()]);
       }
-    });
+    }); */
   }
 }
