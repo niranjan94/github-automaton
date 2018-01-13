@@ -10,8 +10,8 @@
     "gulp": "gulp",
     "start": "node ./bin/www",
     "build": "gulp scripts",
-    "test": "tslint --project tsconfig.json -c tslint.json --type-check 'src/**/*.ts'",
-    "tslint-fix": "tslint --project tsconfig.json -c tslint.json --type-check 'src/**/*.ts' --fix",
+    "test": "tslint --project tsconfig.json -c tslint.json 'src/**/*.ts'",
+    "tslint-fix": "tslint --project tsconfig.json -c tslint.json 'src/**/*.ts' --fix",
     "postinstall": "npm run build"
   },
   "dependencies": {

@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  db:
+    image: mvertes/alpine-mongo
+    restart: always
+    expose:
+      - '27017'
+    volumes:
+      - ./data:/data/db
+
+  automaton:
+    links:
+      - db
+    depends_on:
+      - db
+    build: .
+    restart: always
+    volumes:
+      - ./automaton.private-key.pem:/automaton/automaton.private-key.pem
+    expose:
+      - '3000'
+    environment:
+      BOT_USERNAME: automaton
+      GITHUB_SECRET: abcdefghijklmkw234
+      BOT_ID: 123
+      KEY_FILE_NAME: automaton.private-key.pem
+      MONGODB_URI: mongodb://db:27017/automaton
+      USER_AGENT: GitHubAutomaton/1.0
+    healthcheck:
+      test: ["CMD", "nc", "-z", "-v", "localhost", "3000"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

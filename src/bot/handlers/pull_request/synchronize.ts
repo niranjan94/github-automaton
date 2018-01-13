@@ -1,12 +1,9 @@
-import { IApiResponse } from '../../interfaces/api-response';
-import { IPullRequest } from '../../interfaces/pull-request';
-import { Messages } from '../../messages';
-import { HandlerBase, IBasicData } from '../base';
+import { HandlerBase } from '../base';
 
 export default class extends HandlerBase {
   public handle() {
-    const {primary: {number}} = this.getBasicData() as IBasicData<IPullRequest>;
-    const {repository} = this.payload;
+    // const {primary: {number}} = this.getBasicData() as IBasicData<IPullRequest>;
+    // const {repository} = this.payload;
 
     /* this.github.pullRequests.get({
       number,
