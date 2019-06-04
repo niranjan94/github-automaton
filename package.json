@@ -26,7 +26,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.19.3",
     "mongoose": "^4.10.8",
-    "morgan": "^1.7.0",
+    "morgan": "^1.9.1",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4",
     "winston": "^3.2.1"
