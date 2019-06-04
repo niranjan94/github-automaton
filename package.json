@@ -43,7 +43,7 @@
     "@types/moment": "^2.13.0",
     "@types/mongoose": "^4.7.18",
     "@types/morgan": "^1.7.32",
-    "@types/request": "^0.0.44",
+    "@types/request": "^2.48.1",
     "@types/request-promise-native": "^1.0.5",
     "@types/winston": "^2.3.3",
     "gulp": "^3.9.1",
