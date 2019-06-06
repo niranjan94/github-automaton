@@ -16,7 +16,7 @@
   },
   "engines": {
     "node": "4.x"
-  }
+  },
   "dependencies": {
     "body-parser": "^1.15.2",
     "common-tags": "^1.4.0",
