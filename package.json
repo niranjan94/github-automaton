@@ -15,7 +15,7 @@
     "postinstall": "npm run build"
   },
   "engines": {
-    "node": "4.x"
+    "node": "8.x"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
