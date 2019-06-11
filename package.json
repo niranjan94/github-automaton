@@ -31,7 +31,7 @@
     "mongoose": "^4.10.8",
     "morgan": "^1.9.1",
     "request": "^2.81.0",
-    "request-promise-native": "^1.0.4",
+    "request-promise-native": "^1.0.7",
     "winston": "^3.2.1"
   },
   "devDependencies": {
