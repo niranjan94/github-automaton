@@ -50,7 +50,7 @@
     "@types/request-promise-native": "^1.0.5",
     "@types/winston": "^2.4.4",
     "gulp": "^3.9.1",
-    "gulp-typescript": "^3.1.7",
+    "gulp-typescript": "^3.2.4",
     "merge2": "^1.0.3",
     "nodemon": "^1.11.0",
     "typescript": "^2.3.4"
