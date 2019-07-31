@@ -49,7 +49,7 @@
     "@types/request": "^2.48.2",
     "@types/request-promise-native": "^1.0.16",
     "@types/winston": "^2.4.4",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-typescript": "^5.0.1",
     "merge2": "^1.0.3",
     "nodemon": "^1.11.0",
