@@ -51,7 +51,7 @@
     "@types/winston": "^2.4.4",
     "gulp": "^3.9.1",
     "gulp-typescript": "^5.0.1",
-    "merge2": "^1.0.3",
+    "merge2": "^1.2.4",
     "nodemon": "^1.11.0",
     "typescript": "^3.5.2"
   }
