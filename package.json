@@ -40,7 +40,7 @@
     "@types/dotenv": "^4.0.0",
     "@types/errorhandler": "0.0.32",
     "@types/express": "^4.17.2",
-    "@types/express-handlebars": "^0.0.32",
+    "@types/express-handlebars": "^3.1.0",
     "@types/jsonwebtoken": "^8.3.2",
     "@types/lodash": "^4.14.134",
     "@types/moment": "^2.13.0",
