@@ -47,9 +47,9 @@
   dependencies:
     "@types/express" "*"
 
-"@types/express-handlebars@^0.0.32":
-  version "0.0.32"
-  resolved "https://registry.yarnpkg.com/@types/express-handlebars/-/express-handlebars-0.0.32.tgz#d48c19ebe49760d51cbddf23b72695c0cebda7e0"
+"@types/express-handlebars@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/express-handlebars/-/express-handlebars-3.1.0.tgz#b931e6b51fef4efb25ee120394a42c03cb7a0d23"
 
 "@types/express-serve-static-core@*":
   version "4.0.48"
