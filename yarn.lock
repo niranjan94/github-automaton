@@ -41,9 +41,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/errorhandler@0.0.32":
-  version "0.0.32"
-  resolved "https://registry.yarnpkg.com/@types/errorhandler/-/errorhandler-0.0.32.tgz#387eca73957b481254baddc15d1d40f7fe7153c6"
+"@types/errorhandler@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@types/errorhandler/-/errorhandler-1.5.0.tgz#2e6be2e419e505130c6342d11b3981867db6de2b"
   dependencies:
     "@types/express" "*"
 
