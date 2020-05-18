@@ -115,9 +115,9 @@
   dependencies:
     "@types/request" "*"
 
-"@types/request@*", "@types/request@^2.48.2":
-  version "2.48.2"
-  resolved "https://registry.yarnpkg.com/@types/request/-/request-2.48.2.tgz#936374cbe1179d7ed529fc02543deb4597450fed"
+"@types/request@*", "@types/request@^2.48.5":
+  version "2.48.5"
+  resolved "https://registry.yarnpkg.com/@types/request/-/request-2.48.5.tgz#019b8536b402069f6d11bee1b2c03e7f232937a0"
   dependencies:
     "@types/caseless" "*"
     "@types/node" "*"
