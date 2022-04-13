@@ -27,7 +27,7 @@
     "github": "^14.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "moment": "^2.19.3",
+    "moment": "^2.29.2",
     "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "request": "^2.81.0",
