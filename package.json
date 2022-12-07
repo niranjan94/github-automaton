@@ -22,7 +22,7 @@
     "common-tags": "^1.8.0",
     "dotenv": "^4.0.0",
     "errorhandler": "^1.4.3",
-    "express": "^4.14.0",
+    "express": "^4.17.3",
     "express-handlebars": "^3.1.0",
     "github": "^14.0.0",
     "jsonwebtoken": "^8.5.1",
