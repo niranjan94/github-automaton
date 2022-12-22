@@ -25,7 +25,7 @@
     "express": "^4.14.0",
     "express-handlebars": "^3.1.0",
     "github": "^14.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.2",
     "mongoose": "^5.7.5",
